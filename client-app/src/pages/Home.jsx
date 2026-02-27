@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import api from '../api';
 import PostCard from '../components/PostCard';
 import Sidebar from '../components/Sidebar';
 import { ChevronLeft, ChevronRight, Search as SearchIcon, ArrowUpRight, ArrowRight } from 'lucide-react';
@@ -30,7 +30,7 @@ const Home = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await axios.get('/api/categories', { timeout: 8000 });
+                const res = await api.get('/api/categories', { timeout: 8000 });
                 setCategories(res.data);
             } catch (err) {
                 console.error('Error fetching categories:', err);
@@ -56,7 +56,7 @@ const Home = () => {
                 const category = searchParams.get('category') || '';
                 const page = searchParams.get('page') || 1;
                 
-                const res = await axios.get(`/api/posts`, {
+                const res = await api.get(`/api/posts`, {
                     params: { search, category, page, limit: 4 },
                     timeout: 8000
                 });
