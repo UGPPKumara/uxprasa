@@ -18,11 +18,17 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
+// Start Server FIRST so Render can detect the port immediately
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Server is live on port ${PORT}`);
+});
+
+// Connect to MongoDB asynchronously
 mongoose.connect(process.env.MONGODB_URI, {
-    serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of hanging
+    serverSelectionTimeoutMS: 5000 
 })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
+    .then(() => console.log('✅ MongoDB Connected'))
+    .catch(err => console.error('❌ MongoDB connection error:', err));
 
 app.get('/', (req, res) => {
     res.send('API is running...');
@@ -45,8 +51,4 @@ app.use((err, req, res, next) => {
         error: err.message,
         stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
     });
-});
-
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
 });
