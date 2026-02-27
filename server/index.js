@@ -17,11 +17,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-});
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 mongoose.connect(process.env.MONGODB_URI, {
     serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of hanging
