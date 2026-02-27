@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Youtube, ArrowRight, TrendingUp } from 'lucide-react';
 
@@ -17,7 +17,7 @@ const Sidebar = () => {
         e.preventDefault();
         setStatus({ loading: true, type: '', msg: '' });
         try {
-            await axios.post('/api/newsletter/subscribe', { email: subscribeEmail });
+            await api.post('/api/newsletter/subscribe', { email: subscribeEmail });
             setConfirmState({
                 isOpen: true,
                 title: 'ලියාපදිංචිය සාර්ථකයි!',
@@ -43,7 +43,7 @@ const Sidebar = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await axios.get('/api/categories');
+                const res = await api.get('/api/categories');
                 setCategories(res.data);
             } catch (err) {
                 console.error('Error fetching categories:', err);
@@ -51,7 +51,7 @@ const Sidebar = () => {
         };
         const fetchTrendingPosts = async () => {
             try {
-                const res = await axios.get('/api/posts/trending');
+                const res = await api.get('/api/posts/trending');
                 setTrendingPosts(res.data);
             } catch (err) {
                 console.error('Error fetching trending posts:', err);

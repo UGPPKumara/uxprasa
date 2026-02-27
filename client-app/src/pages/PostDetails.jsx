@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import Sidebar from '../components/Sidebar';
 import { Facebook, Twitter, Youtube, MessageSquare, Clock, Calendar, Linkedin, Instagram } from 'lucide-react';
 import profileImg from '../assets/profile.png';
@@ -17,11 +17,11 @@ const PostDetails = () => {
         window.scrollTo(0, 0);
         const fetchPostAndComments = async () => {
             try {
-                const postRes = await axios.get(`/api/posts/${slug}`);
+                const postRes = await api.get(`/api/posts/${slug}`);
                 setPost(postRes.data);
                 
                 // Fetch comments for this post
-                const commentRes = await axios.get(`/api/comments/post/${postRes.data._id}`);
+                const commentRes = await api.get(`/api/comments/post/${postRes.data._id}`);
                 setComments(commentRes.data);
             } catch (err) {
                 console.error('Error fetching post data:', err);
@@ -49,7 +49,7 @@ const PostDetails = () => {
         
         setIsSubmitting(true);
         try {
-            const res = await axios.post('/api/comments', {
+            const res = await api.post('/api/comments', {
                 postId: post._id,
                 ...commentForm
             });

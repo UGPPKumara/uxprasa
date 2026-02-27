@@ -1,6 +1,6 @@
 import { Mail, Phone, MapPin, Facebook, Twitter, Send, Loader2 } from 'lucide-react';
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import bannerContact from '../assets/banner-contact.jpeg';
 import ConfirmModal from '../components/ConfirmModal';
 
@@ -18,7 +18,7 @@ const Contact = () => {
         setStatus({ loading: true, type: '', msg: '' });
 
         try {
-            const response = await axios.post('/api/contact/send', formData);
+            const response = await api.post('/api/contact/send', formData);
             setStatus({ 
                 loading: false, 
                 type: 'success', 

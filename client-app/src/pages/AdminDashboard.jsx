@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Plus, Trash, Edit, PlusCircle, LayoutDashboard, LogOut, Search, Settings, FileText, BarChart, ChevronDown, CheckCircle, Clock, MessageSquare, Mail, Ban } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
 
     const fetchSettings = async () => {
         try {
-            const res = await axios.get('/api/settings');
+            const res = await api.get('/api/settings');
             setSettingsData({
                 blogName: res.data.blogName || 'UXprasa',
                 blogTagline: res.data.blogTagline || 'Learn. Build. Grow.',
@@ -84,7 +84,7 @@ const AdminDashboard = () => {
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get('/api/posts', {
+            const res = await api.get('/api/posts', {
                 params: { page: 1, limit: 100 }
             });
             setPosts(res.data.posts || []);
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get('/api/categories');
+            const res = await api.get('/api/categories');
             setCategories(res.data);
             if (res.data.length > 0 && !formData.category) {
                 setFormData(prev => ({ ...prev, category: res.data[0].name }));
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
 
     const fetchComments = async () => {
         try {
-            const res = await axios.get('/api/comments');
+            const res = await api.get('/api/comments');
             setComments(res.data);
         } catch (err) {
             console.error('Error fetching comments:', err);
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
     const fetchSubscribers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('/api/newsletter/all', {
+            const res = await api.get('/api/newsletter/all', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSubscribers(res.data);
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
     const handleSaveSettings = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put('/api/settings', settingsData, {
+            await api.put('/api/settings', settingsData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setSettingsSaved(true);
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
             message: 'Are you sure you want to delete this blog post? This action cannot be undone.',
             onConfirm: async () => {
                 try {
-                    await axios.delete(`/api/posts/${id}`);
+                    await api.delete(`/api/posts/${id}`);
                     fetchPosts();
                     setConfirmState(prev => ({ ...prev, isOpen: false }));
                 } catch (err) {
@@ -173,7 +173,7 @@ const AdminDashboard = () => {
             message: 'Are you sure you want to delete this category?',
             onConfirm: async () => {
                 try {
-                    await axios.delete(`/api/categories/${id}`);
+                    await api.delete(`/api/categories/${id}`);
                     fetchCategories();
                     setConfirmState(prev => ({ ...prev, isOpen: false }));
                 } catch (err) {
@@ -190,7 +190,7 @@ const AdminDashboard = () => {
             message: 'Are you sure you want to delete this comment?',
             onConfirm: async () => {
                 try {
-                    await axios.delete(`/api/comments/${id}`);
+                    await api.delete(`/api/comments/${id}`);
                     fetchComments();
                     setConfirmState(prev => ({ ...prev, isOpen: false }));
                 } catch (err) {
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
             message: 'Are you sure you want to remove this email from the newsletter list?',
             onConfirm: async () => {
                 try {
-                    await axios.delete(`/api/newsletter/${id}`);
+                    await api.delete(`/api/newsletter/${id}`);
                     fetchSubscribers();
                     setConfirmState(prev => ({ ...prev, isOpen: false }));
                 } catch (err) {
@@ -219,7 +219,7 @@ const AdminDashboard = () => {
 
     const handleToggleBlockSubscriber = async (id) => {
         try {
-            const res = await axios.put(`/api/newsletter/${id}/toggle-block`);
+            const res = await api.put(`/api/newsletter/${id}/toggle-block`);
             setSubscribers(subscribers.map(sub => sub._id === id ? res.data.subscriber : sub));
             setConfirmState({
                 isOpen: true,
@@ -245,7 +245,7 @@ const AdminDashboard = () => {
     const handleAddCategory = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('/api/categories', { name: catName });
+            await api.post('/api/categories', { name: catName });
             setCatName('');
             fetchCategories();
         } catch (err) {
@@ -270,9 +270,9 @@ const AdminDashboard = () => {
 
         try {
             if (isEditing) {
-                await axios.put(`/api/posts/${isEditing}`, data);
+                await api.put(`/api/posts/${isEditing}`, data);
             } else {
-                await axios.post('/api/posts', data);
+                await api.post('/api/posts', data);
             }
             fetchPosts();
             setShowForm(false);
@@ -799,7 +799,7 @@ const AdminDashboard = () => {
                                                 const token = localStorage.getItem('token');
                                                 const commentIds = comments.map(c => c._id);
                                                 await Promise.all(commentIds.map(id =>
-                                                    axios.delete(`/api/comments/${id}`, {
+                                                    api.delete(`/api/comments/${id}`, {
                                                         headers: { Authorization: `Bearer ${token}` }
                                                     })
                                                 ));

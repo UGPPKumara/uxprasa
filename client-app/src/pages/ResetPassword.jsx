@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Lock, ArrowLeft, ArrowRight, Eye, EyeOff } from 'lucide-react';
-import axios from 'axios';
+import api from '../api';
 import logo from '../assets/logo.png';
 
 const ResetPassword = () => {
@@ -27,7 +27,7 @@ const ResetPassword = () => {
 
         setLoading(true);
         try {
-            await axios.post(`/api/auth/reset-password/${token}`, { password });
+            await api.post(`/api/auth/reset-password/${token}`, { password });
             setSuccess(true);
             setTimeout(() => navigate('/login'), 3000);
         } catch (err) {

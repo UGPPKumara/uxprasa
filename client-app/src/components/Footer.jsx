@@ -3,7 +3,7 @@ import { Facebook, Twitter, Youtube, ArrowUp, Mail, Phone } from 'lucide-react';
 import logoLight from '../assets/logo.png';
 import logoDark from '../assets/logo-dark.png';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 
 const Footer = () => {
     const [isDark, setIsDark] = useState(false);
@@ -13,14 +13,14 @@ const Footer = () => {
     const [topicSearch, setTopicSearch] = useState('');
 
     useEffect(() => {
-        axios.get('/api/categories').then(res => setCategories(res.data)).catch(() => {});
+        api.get('/api/categories').then(res => setCategories(res.data)).catch(() => {});
     }, []);
 
     const handleSubscribe = async (e) => {
         e.preventDefault();
         setStatus({ loading: true, type: '', msg: '' });
         try {
-            await axios.post('/api/newsletter/subscribe', { email: subscribeEmail });
+            await api.post('/api/newsletter/subscribe', { email: subscribeEmail });
             setStatus({ loading: false, type: 'success', msg: 'ස්තූතියි! ඔබේ ලියාපදිංචිය සාර්ථකයි.' });
             setSubscribeEmail('');
         } catch (err) {

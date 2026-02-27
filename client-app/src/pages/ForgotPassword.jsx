@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react';
-import axios from 'axios';
+import api from '../api';
 import logo from '../assets/logo.png';
 
 const ForgotPassword = () => {
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
         setError('');
         setLoading(true);
         try {
-            await axios.post('/api/auth/forgot-password', { email });
+            await api.post('/api/auth/forgot-password', { email });
             setSubmitted(true);
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong. Please try again.');
