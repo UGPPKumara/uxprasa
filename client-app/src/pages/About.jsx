@@ -37,7 +37,7 @@ const About = () => {
             </section>
 
             {/* Section 2: My Story */}
-            <section style={{ maxWidth: '1000px', margin: '0 auto 8rem' }}>
+            <section className="scroll-reveal" style={{ maxWidth: '1000px', margin: '0 auto 8rem' }}>
                 <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
                     <h2 style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '2rem', lineHeight: '1.4' }}>තාක්ෂණය <span style={{ color: 'var(--primary)' }}>සරලව</span> සහ ප්‍රායෝගිකව.</h2>
                 </div>
@@ -67,7 +67,7 @@ const About = () => {
             </section>
 
             {/* Section 3: What I Do */}
-            <section style={{ marginBottom: '8rem' }}>
+            <section className="scroll-reveal" style={{ marginBottom: '8rem' }}>
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                     <h2 style={{ fontSize: '3rem', fontWeight: '800' }}>මගේ <span style={{ color: 'var(--primary)' }}>කාර්යභාරය</span></h2>
                 </div>
@@ -104,7 +104,7 @@ const About = () => {
             </section>
 
             {/* Section 4: My Vision */}
-            <section style={{ maxWidth: '1000px', margin: '0 auto 10rem' }}>
+            <section className="scroll-reveal" style={{ maxWidth: '1000px', margin: '0 auto 10rem' }}>
                 <div style={{ 
                     padding: '5rem', 
                     background: 'var(--bg-card)', 
@@ -122,7 +122,7 @@ const About = () => {
             </section>
 
             {/* Section 5: Let's Connect - Refined */}
-            <section style={{ 
+            <section className="scroll-reveal" style={{ 
                 padding: '7rem 4rem', 
                 background: 'linear-gradient(135deg, var(--primary) 0%, #203391 100%)', 
                 borderRadius: '48px', 

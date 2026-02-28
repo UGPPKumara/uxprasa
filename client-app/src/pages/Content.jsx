@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Facebook, Share2, Youtube } from 'lucide-react';
+import { Facebook, Youtube } from 'lucide-react';
 
 const Content = () => {
     return (
@@ -43,7 +43,7 @@ const Content = () => {
                                 <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                             </svg>
                         </div>
-                        <div>
+                        <div style={{ flex: 1 }}>
                             <h3 style={{ fontSize: '1.6rem', fontWeight: '800' }}>TikTok Feed</h3>
                             <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>@uxprasa</p>
                         </div>
@@ -60,6 +60,7 @@ const Content = () => {
                                 transform: 'scale(1.4)',
                                 transformOrigin: 'top center'
                             }}
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; accelerometer; gyroscope; display-capture"
                             allowFullScreen
                             title="TikTok Feed"
                         ></iframe>

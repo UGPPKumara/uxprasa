@@ -86,7 +86,7 @@ const Home = () => {
             {/* Hero Section - Hide if searching or filtering category */}
             {location.pathname === '/' && !searchParams.get('search') && !searchParams.get('category') && (
                 <section className="hero" style={{ padding: '12rem 0 6rem', textAlign: 'center', position: 'relative' }}>
-                    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '1000px', margin: '0 auto' }} className="animate-reveal">
                         <div style={{ display: 'inline-block', padding: '8px 20px', borderRadius: '40px', background: 'var(--light-2)', color: 'var(--primary)', fontSize: '0.85rem', fontWeight: '800', marginBottom: '2rem', letterSpacing: '1px', textTransform: 'uppercase', border: '1px solid var(--border-color)' }}>
                             🚀 Learn Web Design & Development
                         </div>
@@ -99,17 +99,17 @@ const Home = () => {
                                 display: 'inline-block'
                             }}>සිංහලෙන්ම ඉගෙන ගන්න.</span>
                         </h1>
-                        <p style={{ fontSize: '1.4rem', color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '800px', margin: '0 auto 3rem', fontWeight: '500' }}>
+                        <p className="animate-reveal delay-1" style={{ fontSize: '1.4rem', color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '800px', margin: '0 auto 3rem', fontWeight: '500' }}>
                             Web Development, UI/UX Design සහ WordPress මූලධර්ම ඔබේම භාෂාවෙන් සරලව. 
                             ඩිජිටල් නිර්මාණකරුවෙකු වීමට අවශ්‍ය සියලු දැනුම එකම තැනකින්.
                         </p>
-                        <div className="hero-buttons" style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '4rem' }}>
+                        <div className="hero-buttons animate-reveal delay-2" style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', marginBottom: '4rem' }}>
                             <button className="btn-primary" style={{ padding: '15px 35px', fontSize: '1.1rem' }} onClick={() => navigate('/blog')}>Start Learning</button>
-                            <button style={{ padding: '15px 35px', fontSize: '1.1rem', borderRadius: '30px', background: 'transparent', border: '1px solid var(--border-color)', fontWeight: '700', color: 'var(--text-main)', cursor: 'pointer' }} onClick={() => navigate('/about')}>About Us</button>
+                            <button className="btn-secondary" style={{ padding: '15px 35px', fontSize: '1.1rem' }} onClick={() => navigate('/about')}>About Us</button>
                         </div>
                     </div>
 
-                    <div className="featured-cards-grid">
+                    <div className="featured-cards-grid animate-reveal delay-3">
                         <div className="cta-card" onClick={() => window.open('https://tiktok.com/@uxprasa', '_blank')}>
                             <div className="cta-header">
                                 <h3>Follow on TikTok</h3>
@@ -190,8 +190,8 @@ const Home = () => {
                 </div>
             )}
 
-            <div className="main-layout" id="blog-posts">
-                <div className="content-area">
+            <div className="main-layout scroll-reveal" id="blog-posts">
+                <div className="posts-column animate-fade delay-1">
                     {loading ? (
                         <div style={{ padding: '4rem 0', textAlign: 'center' }}>
                             <div className="loader" style={{ width: '40px', height: '40px', border: '3px solid var(--light-2)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1.5rem' }}></div>
@@ -209,7 +209,11 @@ const Home = () => {
                         </div>
                     ) : (
                         <>
-                            {displayPosts.map(post => <PostCard key={post._id} post={post} />)}
+                            {displayPosts.map((post, index) => (
+                                <div key={post._id} className="scroll-reveal" style={{ transitionDelay: `${index * 0.1}s` }}>
+                                    <PostCard post={post} />
+                                </div>
+                            ))}
                             {totalPages > 1 && (
                                 <div className="pagination" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '4rem' }}>
                                     <button className="page-btn" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} style={{ opacity: currentPage === 1 ? 0.5 : 1, cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}><ChevronLeft size={20} /></button>

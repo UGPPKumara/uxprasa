@@ -18,6 +18,7 @@ const AdminDashboard = () => {
     const [isEditing, setIsEditing] = useState(null);
     const [activeTab, setActiveTab] = useState('posts');
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [settingsData, setSettingsData] = useState({
         blogName: 'UXprasa',
         blogTagline: 'Learn. Build. Grow.',
@@ -332,31 +333,49 @@ const AdminDashboard = () => {
     if (loading) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading Admin Panel...</div>;
 
     return (
-        <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--bg-light)' }}>
+        <div className={`admin-dashboard ${isMobileMenuOpen ? 'mobile-nav-open' : ''}`} style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--bg-light)', position: 'relative' }}>
             {/* Admin Sidebar */}
-            <aside style={{ width: '280px', background: '#1E293B', color: 'white', padding: '2rem', display: 'flex', flexDirection: 'column', height: '100vh', overflowY: 'auto', flexShrink: 0 }}>
-                <div style={{ marginBottom: '3.5rem', padding: '0.5rem 0' }}>
+            <aside className="admin-sidebar" style={{ 
+                width: '280px', 
+                background: '#1E293B', 
+                color: 'white', 
+                padding: '2rem', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                height: '100vh', 
+                overflowY: 'auto', 
+                flexShrink: 0,
+                transition: 'all 0.3s ease',
+                zIndex: 1001
+            }}>
+                <div style={{ marginBottom: '3.5rem', padding: '0.5rem 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <img src={logo} alt="uxprasa" style={{ height: '35px', objectFit: 'contain' }} />
+                    <button className="mobile-close" onClick={() => setIsMobileMenuOpen(false)} style={{ display: 'none', color: 'white', background: 'none' }}>
+                         <Plus size={24} style={{ transform: 'rotate(45deg)' }} />
+                    </button>
                 </div>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
-                    <div onClick={() => setActiveTab('posts')} className={`admin-nav-item ${activeTab === 'posts' ? 'active' : ''}`}><LayoutDashboard size={20} /> Posts</div>
-                    <div onClick={() => setActiveTab('categories')} className={`admin-nav-item ${activeTab === 'categories' ? 'active' : ''}`}><Plus size={20} /> Categories</div>
-                    <div onClick={() => { setActiveTab('comments'); setSelectedPostId(null); }} className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}><MessageSquare size={20} /> Comments</div>
-                    <div onClick={() => setActiveTab('newsletter')} className={`admin-nav-item ${activeTab === 'newsletter' ? 'active' : ''}`}><Mail size={20} /> Newsletter</div>
-                    <div onClick={() => setActiveTab('analytics')} className={`admin-nav-item ${activeTab === 'analytics' ? 'active' : ''}`}><BarChart size={20} /> Analytics</div>
-                    <div onClick={() => setActiveTab('settings')} className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}><Settings size={20} /> Settings</div>
+                    <div onClick={() => { setActiveTab('posts'); setIsMobileMenuOpen(false); }} className={`admin-nav-item ${activeTab === 'posts' ? 'active' : ''}`}><LayoutDashboard size={20} /> Posts</div>
+                    <div onClick={() => { setActiveTab('categories'); setIsMobileMenuOpen(false); }} className={`admin-nav-item ${activeTab === 'categories' ? 'active' : ''}`}><Plus size={20} /> Categories</div>
+                    <div onClick={() => { setActiveTab('comments'); setSelectedPostId(null); setIsMobileMenuOpen(false); }} className={`admin-nav-item ${activeTab === 'comments' ? 'active' : ''}`}><MessageSquare size={20} /> Comments</div>
+                    <div onClick={() => { setActiveTab('newsletter'); setIsMobileMenuOpen(false); }} className={`admin-nav-item ${activeTab === 'newsletter' ? 'active' : ''}`}><Mail size={20} /> Newsletter</div>
+                    <div onClick={() => { setActiveTab('analytics'); setIsMobileMenuOpen(false); }} className={`admin-nav-item ${activeTab === 'analytics' ? 'active' : ''}`}><BarChart size={20} /> Analytics</div>
+                    <div onClick={() => { setActiveTab('settings'); setIsMobileMenuOpen(false); }} className={`admin-nav-item ${activeTab === 'settings' ? 'active' : ''}`}><Settings size={20} /> Settings</div>
                 </div>
 
                 <button
-                    onClick={() => setConfirmState({
-                        isOpen: true,
-                        title: 'Log Out?',
-                        message: 'Are you sure you want to sign out of the Admin Dashboard?',
-                        type: 'danger',
-                        confirmText: 'Yes, Log Out',
-                        onConfirm: handleLogout
-                    })}
+                    onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setConfirmState({
+                            isOpen: true,
+                            title: 'Log Out?',
+                            message: 'Are you sure you want to sign out of the Admin Dashboard?',
+                            type: 'danger',
+                            confirmText: 'Yes, Log Out',
+                            onConfirm: handleLogout
+                        });
+                    }}
                     style={{ display: 'flex', alignItems: 'center', gap: '15px', color: '#94A3B8', padding: '14px 20px', marginTop: 'auto', background: 'none', borderRadius: '12px', width: '100%', transition: 'all 0.3s', cursor: 'pointer', border: 'none', fontWeight: '600', fontSize: '1rem', marginBottom: '4px' }}
                     onMouseOver={e => { e.currentTarget.style.background = 'rgba(239,68,68,0.15)'; e.currentTarget.style.color = '#EF4444'; }}
                     onMouseOut={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = '#94A3B8'; }}
@@ -366,11 +385,16 @@ const AdminDashboard = () => {
             </aside>
 
             {/* Admin Content Area */}
-            <main style={{ flex: 1, padding: '3rem', overflowY: 'auto', height: '100vh' }}>
-                <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
-                    <div>
-                        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Welcome, Admin!</h1>
-                        <p style={{ color: 'var(--text-muted)' }}>Manage your blog content and see your stats.</p>
+            <main className="admin-main" style={{ flex: 1, padding: '3rem', overflowY: 'auto', height: '100vh', position: 'relative' }}>
+                <header className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(true)} style={{ display: 'none', background: 'white', border: '1px solid var(--border-color)', padding: '10px', borderRadius: '8px', color: 'var(--text-main)' }}>
+                            <LayoutDashboard size={20} />
+                        </button>
+                        <div>
+                            <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Welcome, Admin!</h1>
+                            <p style={{ color: 'var(--text-muted)' }}>Manage your blog content and see your stats.</p>
+                        </div>
                     </div>
                     {activeTab === 'posts' && (
                         <button onClick={() => { resetForm(); setShowForm(true); }} className="btn-primary">
@@ -428,10 +452,11 @@ const AdminDashboard = () => {
                         )}
 
                         {/* Posts Table */}
-                        <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
+                        <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)', overflowX: 'auto' }}>
                             <h3 style={{ marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}><FileText size={20} color="var(--primary)" /> Manage Blog Posts</h3>
                             
-                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                            <div style={{ minWidth: '800px' }}>
+                                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead>
                                     <tr style={{ borderBottom: '2px solid var(--bg-light)', textAlign: 'left' }}>
                                         <th style={{ padding: '15px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>POST TITLE</th>
@@ -471,8 +496,9 @@ const AdminDashboard = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </>
-                ) : activeTab === 'categories' ? (
+                    </div>
+                </>
+            ) : activeTab === 'categories' ? (
                     <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
                         <h3 style={{ marginBottom: '2rem' }}>Manage Categories</h3>
                         <form onSubmit={handleAddCategory} style={{ display: 'flex', gap: '1rem', marginBottom: '2.5rem' }}>
@@ -568,9 +594,10 @@ const AdminDashboard = () => {
                         )}
                     </div>
                 ) : activeTab === 'newsletter' ? (
-                    <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
+                    <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)', overflowX: 'auto' }}>
                         <h3 style={{ marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}><Mail size={20} color="var(--primary)" /> Newsletter Subscribers</h3>
-                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <div style={{ minWidth: '600px' }}>
+                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr style={{ borderBottom: '2px solid var(--bg-light)', textAlign: 'left' }}>
                                     <th style={{ padding: '15px', color: 'var(--text-muted)', fontSize: '0.85rem' }}>EMAIL ADDRESS</th>
@@ -610,7 +637,8 @@ const AdminDashboard = () => {
                                     ))
                                 )}
                             </tbody>
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 ) : null}
                 {activeTab === 'analytics' && (
@@ -634,7 +662,7 @@ const AdminDashboard = () => {
                             ))}
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                        <div className="analytics-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
                             {/* Top Posts Table */}
                             <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
                                 <h3 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -727,7 +755,7 @@ const AdminDashboard = () => {
                             <h3 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <FileText size={20} color="var(--primary)" /> Blog Information
                             </h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                            <div className="settings-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                                 <div>
                                     <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: '700', fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Blog Name</label>
                                     <input type="text" value={settingsData.blogName} onChange={e => setSettingsData({...settingsData, blogName: e.target.value})} placeholder="Your blog name" style={{ width: '100%' }} />
@@ -748,7 +776,7 @@ const AdminDashboard = () => {
                             <h3 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <CheckCircle size={20} color="var(--primary)" /> Social Media Links
                             </h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                            <div className="settings-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                                 {[
                                     { key: 'whatsappLink', label: 'WhatsApp', placeholder: 'https://wa.me/...' },
                                     { key: 'facebookLink', label: 'Facebook', placeholder: 'https://facebook.com/...' },
@@ -837,11 +865,14 @@ const AdminDashboard = () => {
 
                 {/* Form Modal */}
                 {showForm && (
-                    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-                        <div style={{ background: 'white', padding: '3.5rem', borderRadius: 'var(--radius-lg)', width: '100%', maxWidth: '900px', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+                    <div className="modal-overlay" style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
+                        <div className="modal-container" style={{ background: 'white', padding: '3.5rem', borderRadius: 'var(--radius-lg)', width: '100%', maxWidth: '900px', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative' }}>
+                            <button onClick={() => setShowForm(false)} style={{ position: 'absolute', top: '2rem', right: '2rem', background: 'none', color: 'var(--text-muted)' }}>
+                                <Plus size={24} style={{ transform: 'rotate(45deg)' }} />
+                            </button>
                             <h2 style={{ fontSize: '2.2rem', marginBottom: '2.5rem', color: 'var(--text-main)', fontWeight: '800' }}>{isEditing ? 'Edit Blog Post' : 'Create New Post'}</h2>
                             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2.5rem' }}>
+                                <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2.5rem' }}>
                                     <div style={{ gridColumn: 'span 2' }}>
                                         <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: '700', fontSize: '0.9rem', color: 'var(--text-muted)' }}>POST TITLE*</label>
                                         <input type="text" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required placeholder="Enter post title..." />
@@ -920,9 +951,55 @@ const AdminDashboard = () => {
                 .admin-nav-item { display: flex; align-items: center; gap: 15px; padding: 14px 20px; border-radius: 12px; cursor: pointer; color: #94A3B8; font-weight: 600; transition: all 0.3s; margin-bottom: 4px; }
                 .admin-nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
                 .admin-nav-item.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(90, 129, 250, 0.3); }
-                .cat-badge-small { font-size: 0.75rem; padding: 6px 12px; background: rgba(90, 129, 250, 0.1); borderRadius: 30px; color: var(--primary); font-weight: 800; text-transform: uppercase; }
+                .cat-badge-small { font-size: 0.75rem; padding: 6px 12px; background: rgba(90, 129, 250, 0.1); border-radius: 30px; color: var(--primary); font-weight: 800; text-transform: uppercase; }
                 input, textarea, select { padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-light); font-family: inherit; font-size: 0.95rem; font-weight: 500; }
                 input:focus, textarea:focus, select:focus { border-color: var(--primary); outline: none; background: white; box-shadow: 0 0 0 4px rgba(90, 129, 250, 0.1); }
+
+                @media (max-width: 1024px) {
+                    .admin-sidebar {
+                        position: fixed;
+                        left: -280px;
+                        width: 280px;
+                    }
+                    .mobile-nav-open .admin-sidebar {
+                        left: 0;
+                    }
+                    .mobile-nav-open .admin-main::after {
+                        content: '';
+                        position: fixed;
+                        inset: 0;
+                        background: rgba(0,0,0,0.5);
+                        z-index: 1000;
+                    }
+                    .admin-main {
+                        padding: 1.5rem !important;
+                    }
+                    .mobile-toggle, .mobile-close {
+                        display: flex !important;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .analytics-grid, .settings-grid, .form-grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                    .admin-header h1 { font-size: 1.5rem !important; }
+                    .modal-container { padding: 2rem !important; }
+                }
+                
+                @media (max-width: 640px) {
+                    .admin-header {
+                        flex-direction: column;
+                        align-items: flex-start !important;
+                        gap: 1.5rem;
+                        margin-bottom: 2.5rem !important;
+                    }
+                    .admin-sidebar {
+                        width: 100%;
+                        left: -100%;
+                    }
+                    .modal-overlay { padding: 0; }
+                    .modal-container { height: 100vh; max-height: 100vh; border-radius: 0; }
+                }
             `}</style>
         </div>
     );

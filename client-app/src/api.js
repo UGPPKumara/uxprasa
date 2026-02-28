@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://uxprasa.onrender.com'
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000'
+    //  baseURL: 'https://uxprasa.onrender.com'
 });
 
 // Add token to requests if it exists

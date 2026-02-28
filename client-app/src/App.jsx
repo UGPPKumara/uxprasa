@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -31,50 +32,102 @@ const PublicRoute = ({ children }) => {
 };
 
 function App() {
+    console.log("App: Root component mounting");
+    
+    useEffect(() => {
+        console.log("App: Main observer effect running");
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        // Persistent observer to handle dynamic content
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Function to observe currently available elements
+        const observeNow = () => {
+            const elements = document.querySelectorAll('.scroll-reveal');
+            elements.forEach(el => observer.observe(el));
+        };
+
+        // Mutation observer to catch dynamically added content (like posts)
+        const mutationObserver = new MutationObserver(() => {
+            observeNow();
+        });
+
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
+        observeNow();
+
+        return () => {
+            observer.disconnect();
+            mutationObserver.disconnect();
+        };
+    }, []);
+
     return (
         <AuthProvider>
             <Router>
                 <ScrollToTop />
-                <Routes>
-                    {/* Auth Routes - No Header/Footer, Protected from logged-in users */}
-                    <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                    <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
-                    <Route path="/reset-password/:token" element={<PublicRoute><ResetPassword /></PublicRoute>} />
-                    <Route 
-                        path="/admin" 
-                        element={
-                            <AdminRoute>
-                                <AdminDashboard />
-                            </AdminRoute>
-                        } 
-                    />
-
-                    {/* Public Routes with Header/Footer */}
-                    <Route 
-                        path="*" 
-                        element={
-                            <>
-                                <Header />
-                                <Routes>
-                                    <Route path="/" element={<Home />} />
-                                    <Route path="/blog" element={<Home />} />
-                                    <Route path="/services" element={<Services />} />
-                                    <Route path="/post/:slug" element={<PostDetails />} />
-                                    <Route path="/about" element={<About />} />
-                                    <Route path="/contact" element={<Contact />} />
-                                    <Route path="/content" element={<Content />} />
-                                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                                    <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-                                    <Route path="*" element={<NotFound />} />
-                                </Routes>
-                                <Footer />
-                            </>
-                        } 
-                    />
-                </Routes>
+                <AppContent />
             </Router>
         </AuthProvider>
     );
 }
+
+const AppContent = () => {
+    const location = useLocation();
+    console.log("AppContent: Current path is", location.pathname);
+    
+    return (
+        <Routes>
+            {/* Auth Routes - No Header/Footer */}
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+            <Route path="/reset-password/:token" element={<PublicRoute><ResetPassword /></PublicRoute>} />
+            <Route 
+                path="/admin" 
+                element={
+                    <AdminRoute>
+                        <AdminDashboard />
+                    </AdminRoute>
+                } 
+            />
+
+            {/* Public Routes with Header/Footer */}
+            <Route 
+                path="/*" 
+                element={
+                    <>
+                        <Header />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/blog" element={<Home />} />
+                            <Route path="/services" element={<Services />} />
+                            <Route path="/post/:slug" element={<PostDetails />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/content" element={<Content />} />
+                            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+                            <Route path="*" element={<HashRedirect />} />
+                        </Routes>
+                        <Footer />
+                    </>
+                } 
+            />
+        </Routes>
+    );
+};
+
+// Helper to handle any edge cases
+const HashRedirect = () => {
+    return <Navigate to="/" replace />;
+};
 
 export default App;

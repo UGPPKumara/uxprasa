@@ -52,13 +52,13 @@ const Contact = () => {
     return (
         <main className="container contact-page">
             <section style={{ paddingTop: '8rem', paddingBottom: '3rem', textAlign: 'center' }}>
-                <h1 style={{ fontSize: '3.5rem', marginBottom: '2rem', fontWeight: '800' }}>Drop Us <span style={{ color: 'var(--primary)' }}>a Line</span></h1>
+                <h1 className="animate-reveal" style={{ fontSize: '3.5rem', marginBottom: '2rem', fontWeight: '800' }}>Drop Us <span style={{ color: 'var(--primary)' }}>a Line</span></h1>
                 
-                <img src={bannerContact} 
+                <img className="animate-reveal delay-1" src={bannerContact} 
                     alt="Contact Banner" style={{ width: '100%', height: '350px', objectFit: 'cover', borderRadius: 'var(--radius-lg)', marginBottom: '3rem' }} />
 
-                <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: '4rem', textAlign: 'left' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                <div className="contact-grid scroll-reveal delay-2" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: '4rem', textAlign: 'left' }}>
+                    <div className="contact-info-column" style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
                         <div>
                             <h3 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>EMAIL ADDRESS</h3>
                             <a href="mailto:uxprasa@gmail.com" style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--text-main)' }}>uxprasa@gmail.com</a>
@@ -88,7 +88,7 @@ const Contact = () => {
                         </div>
                     </div>
 
-                    <div className="contact-form-card" style={{ background: 'var(--bg-card)', padding: '4rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+                    <div className="contact-form-card scroll-reveal delay-3" style={{ background: 'var(--bg-card)', padding: '4rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
                         <h2 style={{ fontSize: '2rem', marginBottom: '2.5rem' }}>Drop Us a Line</h2>
                         
                         {status.msg && (
