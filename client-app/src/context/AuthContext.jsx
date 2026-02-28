@@ -11,13 +11,20 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (token) {
-            // setUser info from token or fetch
-            setUser({ username: 'Admin' }); 
-        } else {
-            setUser(null);
-        }
-        setLoading(false);
+        const fetchUser = async () => {
+            if (token) {
+                try {
+                    const res = await api.get('/api/auth/me');
+                    setUser(res.data);
+                } catch (err) {
+                    logout();
+                }
+            } else {
+                setUser(null);
+            }
+            setLoading(false);
+        };
+        fetchUser();
     }, [token]);
 
     const login = async (username, password) => {

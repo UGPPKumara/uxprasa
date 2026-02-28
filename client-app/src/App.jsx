@@ -23,16 +23,23 @@ const AdminRoute = ({ children }) => {
     return token ? children : <Navigate to="/login" />;
 };
 
+const PublicRoute = ({ children }) => {
+    const { token, loading } = useAuth();
+    if (loading) return null;
+    // If user is already logged in, redirect to admin instead of showing login/forgot-password/etc.
+    return token ? <Navigate to="/admin" /> : children;
+};
+
 function App() {
     return (
         <AuthProvider>
             <Router>
                 <ScrollToTop />
                 <Routes>
-                    {/* Admin Routes - No Header/Footer */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/reset-password/:token" element={<ResetPassword />} />
+                    {/* Auth Routes - No Header/Footer, Protected from logged-in users */}
+                    <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                    <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+                    <Route path="/reset-password/:token" element={<PublicRoute><ResetPassword /></PublicRoute>} />
                     <Route 
                         path="/admin" 
                         element={
