@@ -134,7 +134,7 @@ const Sidebar = () => {
                         value={subscribeEmail}
                         onChange={(e) => setSubscribeEmail(e.target.value)}
                     />
-                    <button type="submit" disabled={status.loading} className="btn-small">
+                    <button type="submit" disabled={status.loading} className="subscribe-btn">
                         {status.loading ? '...' : 'Subscribe'}
                     </button>
                 </form>
@@ -195,13 +195,15 @@ const Sidebar = () => {
             />
 
             <style>{`
-                .sidebar-container { display: flex; flex-direction: column; gap: 2.5rem; }
+                .sidebar-container { display: flex; flex-direction: column; gap: 2.5rem; width: 100%; max-width: 100%; box-sizing: border-box; }
                 .sidebar-widget { 
-                    background: var(--white); 
-                    padding: 2rem; 
+                    background: var(--bg-card); 
+                    padding: 2.2rem 2rem; 
                     border-radius: 20px; 
-                    border: 1px solid #EEF2F6;
-                    box-shadow: 0 2px 15px rgba(0,0,0,0.02);
+                    border: 1px solid var(--border-color);
+                    box-shadow: var(--shadow-sm);
+                    width: 100%;
+                    box-sizing: border-box;
                 }
                 .widget-title { 
                     display: flex; 
@@ -233,11 +235,56 @@ const Sidebar = () => {
                 .small-post-info span { font-size: 0.75rem; color: var(--grey-2); font-weight: 500; }
 
                 /* Newsletter */
-                .newsletter-widget p { font-size: 0.85rem; color: var(--grey-1); margin-bottom: 1.5rem; }
-                .newsletter-form-minimal { display: flex; flex-direction: column; gap: 10px; }
-                .newsletter-form-minimal input { padding: 12px 15px; border-radius: 10px; border: 1px solid #EEF2F6; font-size: 0.85rem; }
-                .btn-small { background: var(--black); color: white; padding: 10px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; }
-                .btn-small:hover { background: var(--primary); }
+                .newsletter-widget p { font-size: 0.88rem; color: var(--grey-1); line-height: 1.6; margin-bottom: 2rem; }
+                .newsletter-form-minimal { display: flex; flex-direction: column; gap: 12px; }
+                .newsletter-form-minimal input { 
+                    padding: 14px 22px; 
+                    border-radius: 100px; 
+                    border: 1.5px solid #EEF2F6; 
+                    font-size: 0.95rem; 
+                    background: var(--light-1);
+                    transition: border-color 0.3s;
+                    width: 100%;
+                }
+                .newsletter-form-minimal input:focus { border-color: var(--primary); outline: none; }
+                .subscribe-btn { 
+                    background: var(--primary); 
+                    color: white; 
+                    padding: 14px 28px; 
+                    border-radius: 100px; 
+                    font-weight: 700; 
+                    font-size: 1rem; 
+                    box-shadow: 0 4px 12px rgba(90, 129, 250, 0.2);
+                    transition: all 0.3s;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .subscribe-btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
+
+                @media (max-width: 768px) {
+                    .sidebar-container { gap: 1.5rem; }
+                    .sidebar-widget { padding: 1.5rem; }
+                    .widget-title { font-size: 1rem; margin-bottom: 1.2rem; }
+                }
+
+                @media (max-width: 600px) {
+                    .newsletter-widget { text-align: center; }
+                    .newsletter-widget p { font-size: 0.85rem; margin-bottom: 1.5rem; }
+                    .newsletter-form-minimal { gap: 12px !important; }
+                    .newsletter-form-minimal input { text-align: center; }
+                }
+
+                @media (max-width: 480px) {
+                    .sidebar-widget { padding: 1.25rem; border-radius: 16px; }
+                    .newsletter-widget { padding: 2rem 1.25rem !important; }
+                    .subscribe-btn { padding: 12px; font-size: 0.95rem; }
+                    .newsletter-form-minimal input { padding: 12px 20px; font-size: 0.9rem; }
+                    .about-text { font-size: 0.85rem; margin-bottom: 1.2rem; }
+                    .profile-header { margin-bottom: 1rem; }
+                    .profile-img-wrapper { width: 50px; height: 50px; }
+                }
 
                 /* Category Vertical List */
                 .category-list-vertical { display: flex; flex-direction: column; gap: 8px; }

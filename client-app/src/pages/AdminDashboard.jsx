@@ -334,6 +334,14 @@ const AdminDashboard = () => {
 
     return (
         <div className={`admin-dashboard ${isMobileMenuOpen ? 'mobile-nav-open' : ''}`} style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'var(--bg-light)', position: 'relative' }}>
+            {/* Mobile Nav Overlay */}
+            {isMobileMenuOpen && (
+                <div 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} 
+                />
+            )}
+
             {/* Admin Sidebar */}
             <aside className="admin-sidebar" style={{ 
                 width: '280px', 
@@ -345,7 +353,7 @@ const AdminDashboard = () => {
                 height: '100vh', 
                 overflowY: 'auto', 
                 flexShrink: 0,
-                transition: 'all 0.3s ease',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 zIndex: 1001
             }}>
                 <div style={{ marginBottom: '3.5rem', padding: '0.5rem 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -386,19 +394,19 @@ const AdminDashboard = () => {
 
             {/* Admin Content Area */}
             <main className="admin-main" style={{ flex: 1, padding: '3rem', overflowY: 'auto', height: '100vh', position: 'relative' }}>
-                <header className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(true)} style={{ display: 'none', background: 'white', border: '1px solid var(--border-color)', padding: '10px', borderRadius: '8px', color: 'var(--text-main)' }}>
+                <header className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem', gap: '1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 0 }}>
+                        <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(true)} style={{ display: 'none', background: 'white', border: '1px solid var(--border-color)', padding: '10px', borderRadius: '8px', color: 'var(--text-main)', flexShrink: 0 }}>
                             <LayoutDashboard size={20} />
                         </button>
-                        <div>
-                            <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Welcome, Admin!</h1>
-                            <p style={{ color: 'var(--text-muted)' }}>Manage your blog content and see your stats.</p>
+                        <div style={{ minWidth: 0 }}>
+                            <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Welcome, Admin!</h1>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Manage your blog content and see your stats.</p>
                         </div>
                     </div>
                     {activeTab === 'posts' && (
-                        <button onClick={() => { resetForm(); setShowForm(true); }} className="btn-primary">
-                            <PlusCircle size={20} /> Create New Post
+                        <button onClick={() => { resetForm(); setShowForm(true); }} className="btn-primary" style={{ flexShrink: 0 }}>
+                            <PlusCircle size={20} /> <span className="btn-text">Create Post</span>
                         </button>
                     )}
                 </header>
@@ -413,7 +421,7 @@ const AdminDashboard = () => {
                                 { label: 'Comments', value: comments.length, icon: <MessageSquare color="#FF5A5F" />, trend: 'Total' },
                                 { label: 'Categories', value: categories.length, icon: <Plus color="#FF5A5F" />, trend: 'Active' }
                             ].map(stat => (
-                                <div key={stat.label} style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                                <div key={stat.label} className="stat-card" style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                         <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: '600' }}>{stat.label}</span>
                                         {stat.icon}
@@ -452,10 +460,10 @@ const AdminDashboard = () => {
                         )}
 
                         {/* Posts Table */}
-                        <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)', overflowX: 'auto' }}>
+                        <div className="table-card" style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
                             <h3 style={{ marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}><FileText size={20} color="var(--primary)" /> Manage Blog Posts</h3>
                             
-                            <div style={{ minWidth: '800px' }}>
+                            <div className="table-responsive" style={{ overflowX: 'auto', margin: '0 -1.5rem', padding: '0 1.5rem' }}>
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                 <thead>
                                     <tr style={{ borderBottom: '2px solid var(--bg-light)', textAlign: 'left' }}>
@@ -501,9 +509,9 @@ const AdminDashboard = () => {
             ) : activeTab === 'categories' ? (
                     <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
                         <h3 style={{ marginBottom: '2rem' }}>Manage Categories</h3>
-                        <form onSubmit={handleAddCategory} style={{ display: 'flex', gap: '1rem', marginBottom: '2.5rem' }}>
-                            <input type="text" placeholder="Category Name" value={catName} onChange={(e) => setCatName(e.target.value)} required style={{ flex: 1 }} />
-                            <button type="submit" className="btn-primary" style={{ padding: '0 25px' }}>Add Category</button>
+                        <form onSubmit={handleAddCategory} className="category-add-form" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
+                            <input type="text" placeholder="Category Name" value={catName} onChange={(e) => setCatName(e.target.value)} required style={{ flex: '1 1 250px', minHeight: '50px' }} />
+                            <button type="submit" className="btn-primary" style={{ padding: '0 25px', flex: '1 1 auto', minWidth: '150px', height: '50px' }}>Add Category</button>
                         </form>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem' }}>
                             {categories.map(cat => (
@@ -594,9 +602,9 @@ const AdminDashboard = () => {
                         )}
                     </div>
                 ) : activeTab === 'newsletter' ? (
-                    <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)', overflowX: 'auto' }}>
+                    <div className="table-card" style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
                         <h3 style={{ marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}><Mail size={20} color="var(--primary)" /> Newsletter Subscribers</h3>
-                        <div style={{ minWidth: '600px' }}>
+                        <div className="table-responsive" style={{ overflowX: 'auto', margin: '0 -1.5rem', padding: '0 1.5rem' }}>
                             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr style={{ borderBottom: '2px solid var(--bg-light)', textAlign: 'left' }}>
@@ -651,7 +659,7 @@ const AdminDashboard = () => {
                                 { label: 'Subscribers', value: subscribers.filter(s => s.status !== 'blocked').length, icon: <Mail color="#FF5A5F" />, trend: 'Active' },
                                 { label: 'Comments', value: comments.length, icon: <MessageSquare color="#FF5A5F" />, trend: 'Total' },
                             ].map(stat => (
-                                <div key={stat.label} style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                                <div key={stat.label} className="stat-card" style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                         <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: '600' }}>{stat.label}</span>
                                         {stat.icon}
@@ -719,24 +727,26 @@ const AdminDashboard = () => {
                         </div>
 
                         {/* Recent Activity */}
-                        <div style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
+                        <div className="activity-card" style={{ background: 'white', borderRadius: 'var(--radius-lg)', padding: '2.5rem', border: '1px solid var(--border-color)' }}>
                             <h3 style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
                                 <Clock size={20} color="var(--primary)" /> Recent Activity
                             </h3>
-                            <div>
+                            <div className="activity-list">
                                 {[
                                     ...posts.slice(0, 4).map(p => ({ label: `Post published: "${p.title}"`, date: p.createdAt, color: '#5A81FA', icon: 'post' })),
                                     ...comments.slice(0, 4).map(c => ({ label: `Comment from ${c.name || 'Anonymous'}`, date: c.createdAt, color: '#10B981', icon: 'comment' })),
                                     ...subscribers.slice(0, 4).map(s => ({ label: `New subscriber: ${s.email}`, date: s.subscribedAt, color: '#F59E0B', icon: 'sub' }))
                                 ].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10).map((item, i) => (
-                                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '14px 0', borderBottom: '1px solid var(--bg-light)' }}>
-                                        <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: `${item.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                    <div key={i} className="activity-item" style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '14px 0', borderBottom: '1px solid var(--bg-light)' }}>
+                                        <div className="activity-icon" style={{ width: '32px', height: '32px', borderRadius: '8px', background: `${item.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                                             {item.icon === 'post' && <FileText size={15} color={item.color} />}
                                             {item.icon === 'comment' && <MessageSquare size={15} color={item.color} />}
                                             {item.icon === 'sub' && <Mail size={15} color={item.color} />}
                                         </div>
-                                        <p style={{ fontWeight: '600', fontSize: '0.9rem', flex: 1, color: 'var(--text-main)' }}>{item.label}</p>
-                                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', flexShrink: 0 }}>{new Date(item.date).toLocaleString()}</p>
+                                        <div className="activity-info" style={{ flex: 1, minWidth: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '15px' }}>
+                                            <p className="activity-label" style={{ fontWeight: '600', fontSize: '0.9rem', color: 'var(--text-main)', margin: 0 }}>{item.label}</p>
+                                            <p className="activity-date" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', flexShrink: 0, margin: 0 }}>{new Date(item.date).toLocaleString()}</p>
+                                        </div>
                                     </div>
                                 ))}
                                 {posts.length === 0 && comments.length === 0 && subscribers.length === 0 && (
@@ -926,7 +936,7 @@ const AdminDashboard = () => {
                                         <label htmlFor="featured-check" style={{ fontWeight: '700', fontSize: '0.9rem', cursor: 'pointer' }}>MARK AS FEATURED</label>
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '2.5rem' }}>
+                                <div className="modal-footer" style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', borderTop: '1px solid var(--border-color)', paddingTop: '2.5rem' }}>
                                     <button type="submit" className="btn-primary" style={{ padding: '16px 50px', fontSize: '1rem' }}>{isEditing ? 'Update Post Now' : 'Publish Blog Post'}</button>
                                     <button type="button" onClick={() => setShowForm(false)} style={{ padding: '16px 50px', background: 'var(--bg-light)', border: '1px solid var(--border-color)', borderRadius: '30px', fontWeight: '700', fontSize: '1rem', cursor: 'pointer' }}>Go Back</button>
                                 </div>
@@ -957,22 +967,19 @@ const AdminDashboard = () => {
 
                 @media (max-width: 1024px) {
                     .admin-sidebar {
-                        position: fixed;
-                        left: -280px;
-                        width: 280px;
+                        position: fixed !important;
+                        left: -280px !important;
+                        width: 280px !important;
+                        box-shadow: 20px 0 40px rgba(0,0,0,0.1);
                     }
                     .mobile-nav-open .admin-sidebar {
-                        left: 0;
-                    }
-                    .mobile-nav-open .admin-main::after {
-                        content: '';
-                        position: fixed;
-                        inset: 0;
-                        background: rgba(0,0,0,0.5);
-                        z-index: 1000;
+                        left: 0 !important;
                     }
                     .admin-main {
                         padding: 1.5rem !important;
+                        flex: 1 !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
                     }
                     .mobile-toggle, .mobile-close {
                         display: flex !important;
@@ -981,24 +988,42 @@ const AdminDashboard = () => {
                     }
                     .analytics-grid, .settings-grid, .form-grid {
                         grid-template-columns: 1fr !important;
+                        gap: 1.5rem !important;
                     }
-                    .admin-header h1 { font-size: 1.5rem !important; }
+                    .admin-header h1 { 
+                        font-size: 1.6rem !important; 
+                        white-space: normal !important;
+                    }
+                    .admin-header p { font-size: 0.8rem !important; }
                     .modal-container { padding: 2rem !important; }
                 }
                 
                 @media (max-width: 640px) {
                     .admin-header {
-                        flex-direction: column;
+                        flex-direction: column !important;
                         align-items: flex-start !important;
                         gap: 1.5rem;
                         margin-bottom: 2.5rem !important;
                     }
                     .admin-sidebar {
-                        width: 100%;
-                        left: -100%;
+                        width: 100% !important;
+                        left: -100% !important;
                     }
-                    .modal-overlay { padding: 0; }
-                    .modal-container { height: 100vh; max-height: 100vh; border-radius: 0; }
+                    .mobile-nav-open .admin-sidebar { left: 0 !important; }
+                    .modal-overlay { padding: 0.5rem; }
+                    .modal-container { height: 100dvh !important; max-height: 100dvh !important; border-radius: 0 !important; padding: 1.5rem !important; width: 100% !important; max-width: 100% !important; overflow-y: auto !important; }
+                    .admin-main { padding: 1rem !important; }
+                    .stat-card { padding: 1.25rem !important; }
+                    .activity-card { padding: 1.5rem !important; }
+                    .activity-item { align-items: flex-start !important; }
+                    .activity-info { flex-direction: column !important; align-items: flex-start !important; gap: 4px !important; }
+                    .activity-label { font-size: 0.85rem !important; line-height: 1.4 !important; }
+                    .activity-date { font-size: 0.75rem !important; }
+                    .form-grid { gap: 1.25rem !important; grid-template-columns: 1fr !important; }
+                    .form-grid > div { grid-column: span 1 !important; }
+                    .modal-footer { flex-direction: column !important; gap: 1rem !important; padding-top: 1.5rem !important; }
+                    .modal-footer button { width: 100% !important; padding: 14px 20px !important; height: auto !important; border-radius: 12px !important; }
+ Riverside
                 }
             `}</style>
         </div>

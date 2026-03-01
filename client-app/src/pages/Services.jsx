@@ -97,25 +97,10 @@ const Services = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    style={{ 
-                        marginTop: '8rem',
-                        padding: '6rem 4rem',
-                        background: 'linear-gradient(135deg, var(--primary) 0%, #2C3D8F 100%)',
-                        borderRadius: '48px',
-                        textAlign: 'center',
-                        color: 'white',
-                        boxShadow: '0 20px 40px rgba(90, 129, 250, 0.2)'
-                    }}
+                    className="services-cta"
                 >
-                    <h2 style={{ fontSize: '2.8rem', fontWeight: '800', marginBottom: '1.5rem', color: 'white' }}>ඔබට වෙබ් අඩවියක් අවශ්‍යද?</h2>
-                    <p style={{ 
-                        color: 'rgba(255,255,255,0.9)', 
-                        fontSize: '1.4rem', 
-                        fontWeight: '600',
-                        lineHeight: '1.6', 
-                        maxWidth: '800px', 
-                        margin: '0 auto 3.5rem' 
-                    }}>
+                    <h2>ඔබට වෙබ් අඩවියක් අවශ්‍යද?</h2>
+                    <p>
                         ඔබේ ව්‍යාපාරයට ගැලපෙනම වෙබ් අඩවියක් හෝ සිස්ටම් එකක් සියලුම graphics, hosting සහ domain සියල්ල සමඟින් සාධාරණ මිලට අපෙන් සාදාගන්න.
                     </p>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -123,7 +108,7 @@ const Services = () => {
                            target="_blank" 
                            rel="noreferrer" 
                            className="btn-pill-white">
-                            මිල ගණන් විමසන්න <ArrowRight size={22} />
+                            මිල ගණන් විමසන්න <ArrowRight size={22} className="btn-icon" />
                         </a>
                     </div>
                 </motion.div>
@@ -234,11 +219,72 @@ const Services = () => {
                     gap: 15px;
                 }
 
+                .services-cta {
+                    margin-top: 8rem;
+                    padding: 6rem 4rem;
+                    background: linear-gradient(135deg, var(--primary) 0%, #2C3D8F 100%);
+                    border-radius: 48px;
+                    text-align: center;
+                    color: white;
+                    box-shadow: 0 20px 40px rgba(90, 129, 250, 0.2);
+                }
+                .services-cta h2 {
+                    font-size: 2.8rem;
+                    font-weight: 800;
+                    margin-bottom: 1.5rem;
+                    color: white;
+                }
+                .services-cta p {
+                    color: rgba(255,255,255,0.9);
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    line-height: 1.6;
+                    max-width: 800px;
+                    margin: 0 auto 3.5rem;
+                }
+
+                @media (max-width: 1024px) {
+                    .services-grid {
+                        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                        gap: 20px;
+                    }
+                }
+
                 @media (max-width: 768px) {
                     .services-grid {
-                        grid-template-columns: 1fr;
+                        display: flex !important;
+                        flex-direction: column !important;
+                        gap: 25px !important;
                     }
-                    .services-page { padding-top: 10rem; }
+                    .service-card {
+                        padding: 2.5rem 2.5rem !important;
+                        border-radius: 24px;
+                    }
+                    .services-page { padding-top: 9rem !important; }
+                    .services-cta { 
+                        margin-top: 5rem;
+                        padding: 3.5rem 1.5rem;
+                        border-radius: 32px;
+                    }
+                    .services-cta h2 { font-size: 2rem; }
+                    .services-cta p { font-size: 1.1rem; margin-bottom: 2.5rem; }
+                    .btn-pill-white { padding: 15px 35px; font-size: 1rem; }
+                    .btn-icon { width: 18px; height: 18px; }
+                }
+
+                @media (max-width: 480px) {
+                    .services-page { padding-top: 10rem !important; }
+                    .services-page h1 { font-size: 2.2rem !important; }
+                    .service-card {
+                        padding: 2.5rem 2rem !important;
+                    }
+                    .service-icon-wrapper {
+                        width: 60px;
+                        height: 60px;
+                        margin-bottom: 1.5rem;
+                    }
+                    .service-card h3 { font-size: 1.3rem; }
+                    .services-cta h2 { font-size: 1.6rem; }
                 }
             `}</style>
         </div>

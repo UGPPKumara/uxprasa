@@ -239,6 +239,23 @@ const Login = () => {
                     margin-top: 1rem;
                     line-height: 1.5;
                 }
+
+                @media (max-width: 768px) {
+                    .login-page { padding: 1.5rem; }
+                    .login-card { padding: 3rem 2.5rem; }
+                    .back-to-site { top: 1.5rem; left: 1.5rem; font-size: 0.9rem; padding: 8px 16px; }
+                }
+
+                @media (max-width: 480px) {
+                    .login-page { padding: 1rem; align-items: flex-start; padding-top: 6rem; }
+                    .login-card { padding: 2.5rem 1.5rem; border-radius: 20px; }
+                    .login-header { margin-bottom: 2.5rem; }
+                    .login-logo { height: 30px; margin-bottom: 1.5rem; }
+                    .login-header p { font-size: 0.95rem; line-height: 1.5; }
+                    .login-form { gap: 1.5rem; }
+                    .login-btn { font-size: 1rem; padding: 14px; }
+                    .back-to-site { top: 1rem; left: 1rem; font-size: 0.85rem; padding: 6px 12px; background: white; border-color: #e2e8f0; }
+                }
             `}</style>
         </div>
     );

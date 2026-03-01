@@ -141,8 +141,8 @@ const Contact = () => {
                                 <button 
                                     type="submit" 
                                     disabled={status.loading}
-                                    className="btn-primary" 
-                                    style={{ padding: '15px 40px', opacity: status.loading ? 0.7 : 1 }}
+                                    className="btn-primary contact-submit-btn" 
+                                    style={{ opacity: status.loading ? 0.7 : 1 }}
                                 >
                                     {status.loading ? (
                                         <>Sending... <Loader2 size={18} className="animate-spin" style={{ marginLeft: '10px' }} /></>
@@ -187,17 +187,21 @@ const Contact = () => {
                         gap: 2rem !important;
                     }
                     .contact-form-card {
-                        padding: 2rem !important;
+                        padding: 2.5rem !important;
                         border-radius: 20px !important;
                     }
+                    .contact-form-card h2 { font-size: 1.8rem !important; margin-bottom: 1.5rem !important; }
                     .contact-form {
                         grid-template-columns: 1fr !important;
+                        gap: 1.2rem !important;
                     }
                     .contact-form > div[style*="span 2"],
                     .contact-form > div {
                         grid-column: span 1 !important;
                     }
+                    .contact-submit-btn { width: 100%; justify-content: center; padding: 15px !important; }
                 }
+
                 @media (max-width: 480px) {
                     .contact-page section {
                         padding-top: 5rem !important;
@@ -208,6 +212,8 @@ const Contact = () => {
                     .contact-form-card {
                         padding: 1.5rem !important;
                     }
+                    .contact-form-card h2 { font-size: 1.6rem !important; }
+                    .contact-submit-btn { font-size: 1rem; }
                 }
             `}</style>
             {/* Popup Modal */}

@@ -166,14 +166,42 @@ const PostCard = ({ post }) => {
 
                 @media (max-width: 1200px) {
                     .post-card { grid-template-columns: 350px 1fr; }
-                    .post-info { padding: 2.5rem; }
+                    .post-info { padding: 2rem; }
                     .post-title-text { font-size: 1.8rem; }
                 }
 
-                @media (max-width: 900px) {
-                    .post-card { display: block; }
-                    .post-image-box { height: 300px; min-height: auto; }
-                    .post-info { padding: 2.5rem; }
+                @media (max-width: 992px) {
+                    .post-card { grid-template-columns: 300px 1fr; }
+                    .post-info { padding: 1.8rem; }
+                    .post-title-text { font-size: 1.6rem; }
+                    .post-summary { font-size: 0.95rem; }
+                }
+
+                @media (max-width: 768px) {
+                    .post-card { 
+                        display: block; 
+                        max-width: 100%;
+                        margin-bottom: 2.5rem;
+                        border-radius: 20px;
+                    }
+                    .post-image-box { height: 260px; min-height: auto; }
+                    .post-info { padding: 1.5rem 1.25rem; }
+                    .post-meta-line { 
+                        gap: 1rem 1.2rem; 
+                        flex-wrap: wrap; 
+                        margin-bottom: 1rem;
+                        font-size: 0.8rem;
+                    }
+                    .meta-item { gap: 6px; }
+                    .post-title-text { font-size: 1.4rem; margin-bottom: 0.8rem; letter-spacing: -0.3px; }
+                    .post-summary { margin-bottom: 1.5rem; font-size: 0.95rem; -webkit-line-clamp: 3; }
+                    .post-category-tag { top: 16px; left: 16px; padding: 6px 14px; font-size: 0.7rem; }
+                }
+
+                @media (max-width: 480px) {
+                    .post-image-box { height: 200px; }
+                    .post-title-text { font-size: 1.3rem; }
+                    .post-info { padding: 1.25rem 1rem; }
                 }
             `}</style>
         </article>

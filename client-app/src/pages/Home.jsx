@@ -86,7 +86,7 @@ const Home = () => {
             {/* Hero Section - Hide if searching or filtering category */}
             {location.pathname === '/' && !searchParams.get('search') && !searchParams.get('category') && (
                 <section className="hero" style={{ padding: '12rem 0 6rem', textAlign: 'center', position: 'relative' }}>
-                    <div style={{ maxWidth: '1000px', margin: '0 auto' }} className="animate-reveal">
+                    <div className="hero-inner animate-reveal">
                         <div style={{ display: 'inline-block', padding: '8px 20px', borderRadius: '40px', background: 'var(--light-2)', color: 'var(--primary)', fontSize: '0.85rem', fontWeight: '800', marginBottom: '2rem', letterSpacing: '1px', textTransform: 'uppercase', border: '1px solid var(--border-color)' }}>
                             🚀 Learn Web Design & Development
                         </div>
@@ -136,19 +136,14 @@ const Home = () => {
             )}
 
             {location.pathname === '/blog' && !searchParams.get('search') && !searchParams.get('category') && (
-                <div style={{ paddingTop: '12rem', marginBottom: '2rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '3rem' }}>
-                    <h1 style={{ fontSize: '3.5rem', fontWeight: '800', marginBottom: '1rem' }}>Our Blog</h1>
-                    <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)' }}>සියලුම තාක්ෂණික ලිපි සහ නිර්මාණ පාඩම් මෙතැනින් කියවන්න.</p>
+                <div className="blog-banner">
+                    <h1 className="blog-banner-title">Our Blog</h1>
+                    <p className="blog-banner-text">සියලුම තාක්ෂණික ලිපි සහ නිර්මාණ පාඩම් මෙතැනින් කියවන්න.</p>
                 </div>
             )}
 
             {(searchParams.get('search') || searchParams.get('category')) && (
-                <div ref={resultsRef} style={{ 
-                    paddingTop: '10rem', // Add padding since hero is hidden
-                    marginBottom: '3rem', 
-                    scrollMarginTop: '100px', 
-                    animation: 'fadeIn 0.5s ease-out'
-                }}>
+                <div ref={resultsRef} className="results-banner">
                     <div style={{ 
                         display: 'flex', 
                         alignItems: 'center', 
@@ -230,12 +225,13 @@ const Home = () => {
             </div>
 
             <style>{`
-                .featured-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 4rem auto 0; padding: 0 20px; }
-                .cta-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; padding: 2.5rem; text-align: left; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; box-shadow: var(--shadow-sm); cursor: pointer; }
+                .featured-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 4rem auto 0; padding: 0; }
+                .hero-inner { max-width: 1000px; margin: 0 auto; width: 100%; }
+                .cta-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; padding: 2.5rem; text-align: left; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; box-shadow: var(--shadow-sm); cursor: pointer; width: 100%; box-sizing: border-box; }
                 .cta-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(90, 129, 250, 0.1); }
                 .cta-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
                 .cta-card h3 { color: var(--text-main); font-size: 1.4rem; font-weight: 700; margin: 0; }
-                .cta-icon-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+                .cta-icon-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s; flex-shrink: 0; }
                 .cta-icon-circle.accent { background: var(--primary); color: white; }
                 .cta-icon-circle.outline { border: 1.5px solid var(--border-color); color: var(--text-muted); }
                 .cta-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0; }
@@ -252,17 +248,62 @@ const Home = () => {
                     .featured-cards-grid { grid-template-columns: 1fr; }
                 }
                 @media (max-width: 768px) {
-                    .hero { padding: 9rem 0 4rem !important; }
-                    .hero h1 { font-size: 2.6rem !important; letter-spacing: -1px !important; }
-                    .hero p { font-size: 1rem !important; }
-                    .featured-cards-grid { grid-template-columns: 1fr; gap: 16px; padding: 0; }
-                    .cta-card { padding: 1.8rem; }
+                    .hero { padding: 8rem 0 3rem !important; }
+                    .hero-inner { max-width: 100%; }
+                    .hero h1 { font-size: 2.8rem !important; letter-spacing: -1px !important; margin-bottom: 1.5rem !important; }
+                    .hero p { font-size: 1.1rem !important; margin-bottom: 2rem !important; }
+                    .featured-cards-grid { grid-template-columns: 1fr; gap: 20px; padding: 0; }
+                    .cta-card { padding: 1.8rem; border-radius: 20px; }
+                    .cta-card h3 { font-size: 1.25rem; }
                     .hero-buttons { gap: 1rem; }
                     .hero-buttons button { width: 100%; justify-content: center; }
                 }
                 @media (max-width: 480px) {
+                    .hero { padding: 7rem 0 2rem !important; }
+                    .hero h1 { font-size: 2.4rem !important; line-height: 1.2 !important; }
+                    .hero p { font-size: 1rem !important; line-height: 1.6 !important; }
+                    .cta-card { padding: 1.4rem; }
+                    .cta-header { margin-bottom: 1.2rem; }
+                }
+                @media (max-width: 380px) {
                     .hero h1 { font-size: 2rem !important; }
-                    .hero p { font-size: 0.95rem !important; }
+                    .hero p { font-size: 0.9rem !important; }
+                    .cta-card { padding: 1.25rem; }
+                }
+
+                /* Blog / Results Banner Responsive */
+                .blog-banner {
+                    padding: 12rem 0 3rem;
+                    margin-bottom: 2rem;
+                    border-bottom: 1px solid var(--border-color);
+                }
+                .blog-banner-title {
+                    font-size: 3.5rem;
+                    font-weight: 800;
+                    margin-bottom: 1rem;
+                }
+                .blog-banner-text {
+                    font-size: 1.2rem;
+                    color: var(--text-muted);
+                }
+                .results-banner {
+                    padding-top: 10rem;
+                    margin-bottom: 3rem;
+                    scroll-margin-top: 100px;
+                    animation: fadeIn 0.5s ease-out;
+                }
+
+                @media (max-width: 768px) {
+                    .blog-banner { padding: 8rem 0 2rem; }
+                    .blog-banner-title { font-size: 2.2rem; }
+                    .blog-banner-text { font-size: 1rem; }
+                    .results-banner { padding-top: 7rem; }
+                }
+
+                @media (max-width: 480px) {
+                    .blog-banner { padding: 6.5rem 0 1.5rem; }
+                    .blog-banner-title { font-size: 1.8rem; }
+                    .results-banner { padding-top: 6rem; }
                 }
             `}</style>
         </main>

@@ -4,13 +4,13 @@ import bannerAbout from '../assets/banner-about.jpeg';
 
 const About = () => {
     return (
-        <main className="container" style={{ paddingTop: '8rem', paddingBottom: '6rem' }}>
+        <main className="container about-page">
             {/* Section 1: Hero */}
-            <section className="about-hero" style={{ textAlign: 'center', marginBottom: '6rem' }}>
+            <section className="about-hero">
                 <motion.h1 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    style={{ fontSize: '3.5rem', marginBottom: '2rem', fontWeight: '800' }}
+                    className="about-hero-title"
                 >
                     The <span style={{ color: 'var(--primary)' }}>Story</span> Behind the Stories
                 </motion.h1>
@@ -19,18 +19,18 @@ const About = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8 }}
-                    style={{ position: 'relative', maxWidth: '1200px', margin: '2rem auto', borderRadius: '32px', overflow: 'hidden', height: '450px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+                    className="about-banner-container"
                 >
                     <img src={bannerAbout} 
-                        alt="About Banner" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <div style={{ position: 'absolute', bottom: '2rem', right: '2rem', display: 'flex', gap: '1.5rem' }}>
-                        <div style={{ padding: '1.5rem 2.5rem', background: 'white', borderRadius: '24px', textAlign: 'center', minWidth: '160px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}>
-                            <h2 style={{ fontSize: '2.2rem', color: 'var(--primary)', fontWeight: '800' }}>50+</h2>
-                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>Projects</p>
+                        alt="About Banner" className="about-banner-img" />
+                    <div className="about-stats-overlay">
+                        <div className="about-stat-card white">
+                            <h2 className="about-stat-num">50+</h2>
+                            <p className="about-stat-label">Projects</p>
                         </div>
-                        <div style={{ padding: '1.5rem 2.5rem', background: 'var(--primary)', color: 'white', borderRadius: '24px', textAlign: 'center', minWidth: '160px', boxShadow: '0 10px 30px rgba(90, 129, 250, 0.3)' }}>
-                             <h2 style={{ fontSize: '2.2rem', fontWeight: '800' }}>2+</h2>
-                            <p style={{ fontSize: '0.85rem', opacity: '0.9', fontWeight: '700', textTransform: 'uppercase' }}>Years</p>
+                        <div className="about-stat-card primary">
+                             <h2 className="about-stat-num">2+</h2>
+                            <p className="about-stat-label">Years</p>
                         </div>
                     </div>
                 </motion.div>
@@ -104,49 +104,26 @@ const About = () => {
             </section>
 
             {/* Section 4: My Vision */}
-            <section className="scroll-reveal" style={{ maxWidth: '1000px', margin: '0 auto 10rem' }}>
-                <div style={{ 
-                    padding: '5rem', 
-                    background: 'var(--bg-card)', 
-                    borderRadius: '48px', 
-                    textAlign: 'center',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    border: '1px solid var(--border-color)'
-                }}>
-                    <Quote size={80} style={{ position: 'absolute', top: '20px', left: '20px', opacity: 0.1, color: 'var(--primary)' }} />
-                    <p style={{ fontSize: '1.8rem', fontWeight: '600', lineHeight: '1.6', fontStyle: 'italic', position: 'relative', zIndex: 1, color: 'var(--text-main)' }}>
+            <section className="scroll-reveal about-vision-section">
+                <div className="about-vision-card">
+                    <Quote className="about-quote-icon" />
+                    <p className="about-vision-text">
                         "මගේ ඉලක්කය වන්නේ ශ්‍රී ලංකාවේ ඩිජිටල් අවකාශය (Digital Space) තුළ ගුණාත්මක සහ ජාත්‍යන්තර මට්ටමේ නිර්මාණ බිහි කිරීමයි. ඔබ ව්‍යාපාරිකයෙක් වුවත්, ආධුනිකයෙක් වුවත්, තාක්ෂණය හරහා ඔබේ සිහින ජයගන්නට මම උදව් කිරීමට සූදානම්."
                     </p>
                 </div>
             </section>
 
             {/* Section 5: Let's Connect - Refined */}
-            <section className="scroll-reveal" style={{ 
-                padding: '7rem 4rem', 
-                background: 'linear-gradient(135deg, var(--primary) 0%, #203391 100%)', 
-                borderRadius: '48px', 
-                textAlign: 'center',
-                color: 'white',
-                boxShadow: '0 25px 50px rgba(90, 129, 250, 0.25)',
-                position: 'relative',
-                overflow: 'hidden'
-            }}>
+            <section className="scroll-reveal about-cta-section">
                 {/* Decorative circles */}
-                <div style={{ position: 'absolute', top: '-100px', left: '-100px', width: '300px', height: '300px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}></div>
-                <div style={{ position: 'absolute', bottom: '-100px', right: '-100px', width: '300px', height: '300px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}></div>
+                <div className="cta-circle-top"></div>
+                <div className="cta-circle-bottom"></div>
 
-                <h2 style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '2rem', color: 'white' }}>අපි එක්ව වැඩ කරමු!</h2>
-                <p style={{ 
-                    color: 'rgba(255,255,255,0.95)', 
-                    fontSize: '1.25rem', 
-                    lineHeight: '1.9', 
-                    maxWidth: '800px', 
-                    margin: '0 auto 4.5rem' 
-                }}>
+                <h2 className="about-cta-title">අපි එක්ව වැඩ කරමු!</h2>
+                <p className="about-cta-text">
                     ඔබේ ව්‍යාපාරයට ගැලපෙන වෙබ් අඩවියක් හෝ මෘදුකාංගයක් නිර්මාණය කරගැනීමට අවශ්‍යද? නැතිනම් තාක්ෂණික ගැටලුවක් ගැන සාකච්ඡා කිරීමට අවශ්‍යද? මම ඔබට උදව් කිරීමට සැමවිටම සූදානම්.
                 </p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap', position: 'relative', zIndex: 1 }}>
+                <div className="about-cta-btns">
                     <a href="https://www.nuvoora.com" target="_blank" rel="noreferrer" className="btn-about-white">
                         Work With Me (Nuvoora IT) <Briefcase size={22} />
                     </a>
@@ -204,11 +181,135 @@ const About = () => {
                     text-decoration: none;
                     transition: all 0.3s;
                     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                    text-align: center;
+                    justify-content: center;
                 }
                 .btn-about-white:hover {
                     background: var(--light-2);
                     transform: translateY(-5px);
                     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+                }
+
+                /* Vision Section Styles */
+                .about-vision-section { maxWidth: 1000px; margin: 0 auto 10rem; }
+                .about-vision-card {
+                    padding: 5rem; 
+                    background: var(--bg-card); 
+                    border-radius: 48px; 
+                    text-align: center;
+                    position: relative;
+                    overflow: hidden;
+                    border: 1px solid var(--border-color);
+                }
+                .about-quote-icon { position: absolute; top: 20px; left: 20px; width: 80px; height: 80px; opacity: 0.1; color: var(--primary); }
+                .about-vision-text { 
+                    font-size: 1.8rem; 
+                    fontWeight: 600; 
+                    line-height: 1.6; 
+                    font-style: italic; 
+                    position: relative; 
+                    zIndex: 1; 
+                    color: var(--text-main); 
+                }
+
+                /* About CTA Styles */
+                .about-cta-section {
+                    padding: 7rem 4rem; 
+                    background: linear-gradient(135deg, var(--primary) 0%, #203391 100%); 
+                    border-radius: 48px; 
+                    text-align: center;
+                    color: white;
+                    box-shadow: 0 25px 50px rgba(90, 129, 250, 0.25);
+                    position: relative;
+                    overflow: hidden;
+                }
+                .cta-circle-top { position: absolute; top: -100px; left: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+                .cta-circle-bottom { position: absolute; bottom: -100px; right: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+                .about-cta-title { font-size: 3rem; font-weight: 800; marginBottom: 2rem; color: white; position: relative; z-index: 1; }
+                .about-cta-text { 
+                    color: rgba(255,255,255,0.95); 
+                    font-size: 1.25rem; 
+                    line-height: 1.9; 
+                    max-width: 800px; 
+                    margin: 0 auto 4.5rem; 
+                    position: relative;
+                    z-index: 1;
+                }
+                .about-cta-btns { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; position: relative; z-index: 1; }
+
+                /* About Hero Styles */
+                .about-page { padding-top: 8rem; padding-bottom: 6rem; }
+                .about-hero { text-align: center; margin-bottom: 6rem; }
+                .about-hero-title { font-size: 3.5rem; margin-bottom: 2rem; fontWeight: 800; line-height: 1.2; }
+                .about-banner-container { 
+                    position: relative; 
+                    max-width: 1200px; 
+                    margin: 2rem auto; 
+                    border-radius: 32px; 
+                    overflow: hidden; 
+                    height: 500px; 
+                    box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+                }
+                .about-banner-img { width: 100%; height: 100%; object-fit: cover; }
+                .about-stats-overlay { position: absolute; bottom: 2rem; right: 2rem; display: flex; gap: 1.5rem; z-index: 2; }
+                .about-stat-card { padding: 1.5rem 2.5rem; border-radius: 24px; text-align: center; min-width: 160px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+                .about-stat-card.white { background: white; }
+                .about-stat-card.primary { background: var(--primary); color: white; box-shadow: 0 10px 30px rgba(90, 129, 250, 0.3); }
+                .about-stat-num { font-size: 2.2rem; fontWeight: 800; margin-bottom: 0.2rem; }
+                .white .about-stat-num { color: var(--primary); }
+                .about-stat-label { font-size: 0.85rem; color: var(--text-muted); fontWeight: 700; textTransform: uppercase; margin: 0; }
+                .primary .about-stat-label { color: rgba(255,255,255,0.9); }
+
+                @media (max-width: 992px) {
+                    .about-banner-container { height: 400px; }
+                    .about-hero-title { font-size: 2.8rem; }
+                }
+
+                @media (max-width: 768px) {
+                    .about-page { padding-top: 6rem; }
+                    .about-hero { margin-bottom: 4rem; }
+                    .about-hero-title { font-size: 2.2rem; padding: 0 1rem; }
+                    .about-banner-container { height: 350px; margin: 1.5rem 0.5rem; border-radius: 20px; }
+                    .about-stats-overlay { 
+                        position: absolute; 
+                        bottom: 1.5rem; 
+                        left: 1.5rem; 
+                        right: 1.5rem; 
+                        justify-content: center;
+                        gap: 1rem;
+                    }
+                    .about-stat-card { padding: 1rem 1.5rem; min-width: 0; flex: 1; border-radius: 16px; }
+                    .about-stat-num { font-size: 1.6rem; }
+                    .about-stat-label { font-size: 0.75rem; }
+                    
+                    .about-vision-section { margin-bottom: 6rem; padding: 0 1rem; }
+                    .about-vision-card { padding: 3rem 2rem; border-radius: 32px; }
+                    .about-vision-text { font-size: 1.35rem; }
+                    .about-quote-icon { width: 50px; height: 50px; top: 10px; left: 10px; }
+
+                    .about-cta-section { padding: 5rem 2rem; border-radius: 32px; }
+                    .about-cta-title { font-size: 2.2rem; }
+                    .about-cta-text { font-size: 1.1rem; margin-bottom: 3rem; }
+                    .about-cta-btns { gap: 1rem; }
+
+                    .btn-about-white { width: 100%; max-width: 300px; margin: 0 auto; padding: 15px 25px; font-size: 0.9rem; }
+                }
+
+                @media (max-width: 480px) {
+                    .about-hero-title { font-size: 1.9rem; }
+                    .about-banner-container { height: 300px; }
+                    .about-stats-overlay { flex-direction: column; bottom: 1rem; left: 1rem; right: 1rem; }
+                    .about-stat-card { padding: 0.8rem 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+                    .about-stat-num { font-size: 1.4rem; margin-bottom: 0; }
+                    .about-stat-label { font-size: 0.8rem; }
+
+                    .about-vision-card { padding: 2.5rem 1.25rem; }
+                    .about-vision-text { font-size: 1.1rem; line-height: 1.7; }
+                    .about-quote-icon { width: 40px; height: 40px; }
+
+                    .about-cta-section { padding: 4rem 1.5rem; }
+                    .about-cta-title { font-size: 1.8rem; }
+                    .about-cta-text { font-size: 1rem; }
                 }
             `}</style>
         </main>

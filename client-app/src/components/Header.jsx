@@ -47,9 +47,13 @@ const Header = () => {
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%', width: '100%' }}>
           {/* Logo */}
-          <div className="logo">
+          <div className="logo" style={{ flexShrink: 1, minWidth: 0 }}>
             <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={isDark ? logoDark : logoLight} alt="uxprasa" style={{ height: '35px', objectFit: 'contain' }} />
+              <img 
+                src={isDark ? logoDark : logoLight} 
+                alt="uxprasa" 
+                className="logo-img"
+              />
             </Link>
           </div>
 
@@ -68,7 +72,7 @@ const Header = () => {
           </nav>
 
           {/* Actions */}
-          <div className="actions" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className="actions" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', flexShrink: 0 }}>
             <button className="icon-btn" onClick={() => setIsSearchOpen(true)} aria-label="Search"><Search size={20} /></button>
             <button className="icon-btn" onClick={toggleTheme} aria-label="Toggle Theme">
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -91,7 +95,7 @@ const Header = () => {
               aria-label="Toggle Menu"
               style={{ display: 'none' }}
             >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -158,14 +162,24 @@ const Header = () => {
           border-color: rgba(255,255,255,0.08);
         }
         .header.scrolled {
-          top: 0;
-          left: 0;
-          right: 0;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100% !important;
           height: 70px;
           border-radius: 0;
           backdrop-filter: blur(15px);
           box-shadow: var(--shadow-sm);
-          padding: 0;
+          padding: 0 5%;
+          background: rgba(248, 249, 253, 0.95);
+        }
+        [data-theme='dark'] .header.scrolled {
+          background: rgba(15, 23, 42, 0.95);
+        }
+        .logo-img {
+          height: 35px;
+          object-fit: contain;
+          transition: height 0.3s ease;
         }
         .nav-link {
           font-weight: 500;
@@ -180,8 +194,9 @@ const Header = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          transition: all 0.2s ease;
         }
-        .icon-btn:hover { color: var(--primary); }
+        .icon-btn:hover { color: var(--primary); transform: translateY(-2px); }
 
         /* Mobile overlay menu */
         .mobile-nav-overlay {
@@ -206,24 +221,71 @@ const Header = () => {
         }
 
         /* Responsive */
+        @media (max-width: 1100px) {
+          .whatsapp-text { display: none; }
+          .whatsapp-btn { padding: 10px 12px !important; border-radius: 50px !important; }
+          .desktop-nav { gap: 1rem !important; }
+          .logo-img { height: 28px; }
+          .header {
+            left: 2%;
+            right: 2%;
+            padding: 0 1rem;
+          }
+          .header.scrolled {
+            padding: 0 1rem !important;
+          }
+          .nav-link { font-size: 0.85rem; }
+        }
+
+        @media (max-width: 900px) {
+          .desktop-nav { gap: 0.8rem !important; }
+          .logo-img { height: 24px; }
+          .nav-link { font-size: 0.8rem; }
+        }
+
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .whatsapp-btn { padding: 10px 14px !important; }
+          .actions { gap: 0.5rem !important; }
+          .whatsapp-btn { padding: 9px 12px !important; }
           .whatsapp-text { display: none; }
           .hamburger-btn { display: flex !important; }
+          .logo-img { height: 24px; }
           .header {
-            top: 12px !important;
-            left: 3% !important;
-            right: 3% !important;
-            height: 64px !important;
-            padding: 0 1rem !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 65px;
+            padding: 0 10px;
+            border-radius: 0;
+            border-top: none;
+            border-left: none;
+            border-right: none;
           }
           .header.scrolled {
             top: 0 !important;
             left: 0 !important;
             right: 0 !important;
+            height: 65px !important;
             border-radius: 0 !important;
+            padding: 0 10px !important;
           }
+          .icon-btn { width: 34px; height: 34px; }
+          .icon-btn svg { width: 18px; height: 18px; }
+        }
+
+        @media (max-width: 420px) {
+          .actions { gap: 0.4rem !important; }
+          .header { padding: 0 0.6rem; }
+          .header.scrolled { padding: 0 0.6rem !important; }
+          .logo-img { height: 22px; }
+          .whatsapp-btn { padding: 8px 10px !important; }
+        }
+
+        @media (max-width: 360px) {
+          .actions { gap: 0.3rem !important; }
+          .logo-img { height: 20px; }
+          .icon-btn { width: 30px; height: 30px; }
         }
       `}</style>
     </>
@@ -231,3 +293,6 @@ const Header = () => {
 };
 
 export default Header;
+
+
+

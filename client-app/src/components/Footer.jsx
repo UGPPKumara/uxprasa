@@ -74,7 +74,7 @@ const Footer = () => {
 
             <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                 {/* Newsletter Section */}
-                <div style={{ 
+                <div className="footer-newsletter-box" style={{ 
                     backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'var(--white)', 
                     padding: '4rem', 
                     borderRadius: '24px', 
@@ -83,11 +83,11 @@ const Footer = () => {
                     justifyContent: 'space-between', 
                     alignItems: 'center', 
                     flexWrap: 'wrap', 
-                    gap: '2rem', 
+                    gap: '2.5rem', 
                     border: '1px solid var(--border-color)',
                     boxShadow: '0 20px 40px rgba(0,0,0,0.03)'
                 }}>
-                    <div style={{ flex: '1', minWidth: '300px' }}>
+                    <div className="newsletter-text" style={{ flex: '1', minWidth: '300px' }}>
                         <h2 style={{ fontSize: '2.2rem', marginBottom: '1rem', fontWeight: '800' }}>Stay updated!</h2>
                         <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>අපගේ නවතම ලිපි සහ පුවත් සෘජුවම ඔබගේ email ලිපිනයට ලබා ගන්න.</p>
                         {status.msg && (
@@ -99,16 +99,16 @@ const Footer = () => {
                             }}>{status.msg}</p>
                         )}
                     </div>
-                    <form onSubmit={handleSubscribe} style={{ display: 'flex', gap: '1rem', flex: '1.2', maxWidth: '600px', minWidth: '300px' }}>
+                    <form onSubmit={handleSubscribe} className="footer-newsletter-form">
                         <input 
                             type="email" 
                             required
                             placeholder="Email Address..." 
                             value={subscribeEmail}
                             onChange={(e) => setSubscribeEmail(e.target.value)}
-                            style={{ borderRadius: '30px', padding: '18px 30px', background: isDark ? 'var(--bg-light)' : 'var(--light-1)', border: '1px solid var(--border-color)', fontSize: '1rem' }} 
+                            className="footer-news-input"
                         />
-                        <button type="submit" disabled={status.loading} className="btn-primary" style={{ padding: '0 40px', fontSize: '1rem', opacity: status.loading ? 0.7 : 1 }}>
+                        <button type="submit" disabled={status.loading} className="btn-primary footer-news-btn">
                             {status.loading ? '...' : 'Subscribe'}
                         </button>
                     </form>
@@ -212,8 +212,8 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '3rem', borderTop: '1px solid var(--border-color)' }}>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: '500' }}>
+                <div className="footer-bottom">
+                    <p className="footer-copyright">
                         © 2026 — UXPRASA. Crafted with ❤️ in Sri Lanka.
                     </p>
                     <button onClick={scrollToTop} className="scroll-top-btn">
@@ -225,44 +225,44 @@ const Footer = () => {
             <style>{`
                 .footer-links { list-style: none; }
                 .footer-links li { margin-bottom: 1.2rem; }
-                .footer-links a { color: var(--text-muted); font-size: 1rem; font-weight: 500; transition: all 0.3s; }
+                .footer-links a { color: var(--text-muted); font-size: 1rem; font-weight: 500; transition: all 0.3s; text-transform: capitalize; }
                 .footer-links a:hover { color: var(--primary); padding-left: 8px; }
-                
-                .social-pill { 
-                    width: 45px; 
-                    height: 45px; 
-                    border-radius: 14px; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center; 
-                    background: ${isDark ? 'rgba(255,255,255,0.05)' : 'var(--white)'}; 
-                    color: var(--text-main); 
+
+                .social-pill {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: ${isDark ? 'rgba(255,255,255,0.05)' : 'var(--white)'};
+                    color: var(--text-main);
                     border: 1px solid var(--border-color);
-                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+                    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
                 }
-                .social-pill:hover { 
-                    background: var(--primary); 
-                    color: white; 
-                    transform: translateY(-5px) rotate(8deg); 
+                .social-pill:hover {
+                    background: var(--primary);
+                    color: white;
+                    transform: translateY(-5px) rotate(8deg);
                     border-color: var(--primary);
                     box-shadow: 0 10px 20px rgba(90, 129, 250, 0.3);
                 }
 
-                .scroll-top-btn { 
-                    background: var(--bg-card); 
-                    border: 1px solid var(--border-color); 
-                    width: 50px; 
-                    height: 50px; 
-                    border-radius: 15px; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center; 
+                .scroll-top-btn {
+                    background: var(--bg-card);
+                    border: 1px solid var(--border-color);
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 15px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     transition: all 0.3s;
                     color: var(--text-main);
                 }
-                .scroll-top-btn:hover { 
-                    background: var(--primary); 
-                    color: white; 
+                .scroll-top-btn:hover {
+                    background: var(--primary);
+                    color: white;
                     border-color: var(--primary);
                     transform: translateY(-5px);
                     box-shadow: 0 10px 20px rgba(90, 129, 250, 0.2);
@@ -270,9 +270,87 @@ const Footer = () => {
 
                 .footer-email:hover { color: var(--primary) !important; }
 
+                @media (max-width: 1024px) {
+                    .footer-newsletter-box { flex-direction: column !important; text-align: center; gap: 2rem !important; padding: 3rem 2rem !important; }
+                    .footer-newsletter-form { width: 100% !important; max-width: 100% !important; flex-direction: column !important; }
+                    .footer-news-input, .footer-news-btn { width: 100% !important; text-align: center; }
+                }
+
                 @media (max-width: 768px) {
-                    footer { padding: 5rem 0 3rem !important; }
-                    .container > div:nth-child(2) { grid-template-columns: 1fr !important; gap: 3rem !important; }
+                    footer { padding: 4rem 0 3rem !important; }
+                    .footer-newsletter-box { padding: 3rem 1.5rem !important; margin-bottom: 4rem !important; }
+                    .newsletter-text h2 { font-size: 1.8rem !important; margin-bottom: 0.5rem !important; }
+                    .newsletter-text p { font-size: 0.95rem !important; line-height: 1.6 !important; margin-bottom: 0 !important; }
+                    .footer-newsletter-form { gap: 1.2rem !important; margin-top: 1rem !important; display: flex !important; flex-direction: column !important; }
+                    .footer-news-input { padding: 12px 20px !important; font-size: 0.9rem !important; }
+                    .footer-news-btn { height: 50px !important; font-size: 0.95rem !important; padding: 0 !important; }
+                    .container > div:nth-child(2) { grid-template-columns: 1fr 1fr !important; gap: 2.5rem 1.5rem !important; }
+                }
+
+                @media (max-width: 480px) {
+                    .container > div:nth-child(2) { grid-template-columns: 1fr 1fr !important; gap: 2rem 1rem !important; }
+                    .container > div:nth-child(2) > div:first-child,
+                    .container > div:nth-child(2) > div:last-child {
+                        grid-column: span 2 !important;
+                    }
+                    .footer-newsletter-box { padding: 2rem 1.25rem !important; border-radius: 20px !important; }
+                    .newsletter-text h2 { font-size: 1.5rem !important; }
+                    .newsletter-text p { font-size: 0.88rem !important; }
+                }
+                .footer-news-input { 
+                    flex: 1;
+                    border-radius: 100px; 
+                    padding: 16px 28px; 
+                    background: ${isDark ? 'var(--bg-light)' : 'var(--light-1)'}; 
+                    border: 1.5px solid var(--border-color); 
+                    font-size: 1rem; 
+                    outline: none;
+                    transition: all 0.3s;
+                }
+                .footer-news-input:focus { border-color: var(--primary); }
+                .footer-news-btn { 
+                    padding: 0 45px; 
+                    height: 58px;
+                    border-radius: 100px; 
+                    font-size: 1.05rem; 
+                    transition: all 0.3s;
+                    white-space: nowrap;
+                }
+
+                .footer-bottom {
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center; 
+                    padding-top: 3rem; 
+                    border-top: 1px solid var(--border-color);
+                }
+                .footer-copyright {
+                    color: var(--text-muted); 
+                    fontSize: 0.95rem; 
+                    fontWeight: 500;
+                    margin: 0;
+                }
+
+                @media (max-width: 600px) {
+                    .footer-bottom {
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 1rem;
+                        padding-top: 2rem;
+                    }
+                    .footer-copyright {
+                        font-size: 0.82rem;
+                        line-height: 1.5;
+                        flex: 1;
+                        margin-right: 10px;
+                        text-align: left;
+                    }
+                    .scroll-top-btn {
+                        width: 42px;
+                        height: 42px;
+                        flex-shrink: 0;
+                    }
                 }
             `}</style>
         </footer>
