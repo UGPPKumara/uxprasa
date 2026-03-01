@@ -144,40 +144,21 @@ const Home = () => {
 
             {(searchParams.get('search') || searchParams.get('category')) && (
                 <div ref={resultsRef} className="results-banner">
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '20px', 
-                        background: 'var(--light-2)', 
-                        padding: '2rem 2.5rem', 
-                        borderRadius: '24px', 
-                        border: '1px solid var(--border-color)' 
-                    }}>
-                        <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 16px rgba(90, 129, 250, 0.2)' }}>
+                    <div className="results-inner">
+                        <div className="results-icon">
                             <SearchIcon size={28} />
                         </div>
-                        <div style={{ flex: 1 }}>
-                            <p style={{ color: 'var(--text-muted)', fontSize: '1rem', marginBottom: '4px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        <div className="results-text">
+                            <p className="results-subtitle">
                                 {searchParams.get('search') ? 'Search Phrase' : 'Category Filter'}
                             </p>
-                            <h2 style={{ fontSize: '2rem', fontWeight: '800', margin: 0, color: 'var(--text-main)' }}>
+                            <h2 className="results-title">
                                 "{searchParams.get('search') || searchParams.get('category')}"
                             </h2>
                         </div>
                         <button 
                             onClick={() => navigate(location.pathname === '/blog' ? '/blog' : '/')} 
-                            className="btn-clear" 
-                            style={{ 
-                                background: 'white', 
-                                border: '1px solid var(--border-color)', 
-                                padding: '12px 25px', 
-                                borderRadius: '12px', 
-                                fontWeight: '700', 
-                                cursor: 'pointer',
-                                transition: 'all 0.3s'
-                            }}
-                            onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--primary)'}
-                            onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--border-color)'}
+                            className="btn-clear-results"
                         >
                             Clear Results
                         </button>
@@ -292,12 +273,52 @@ const Home = () => {
                     scroll-margin-top: 100px;
                     animation: fadeIn 0.5s ease-out;
                 }
+                .results-inner {
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    background: var(--light-2);
+                    padding: 2rem 2.5rem;
+                    border-radius: 24px;
+                    border: 1px solid var(--border-color);
+                }
+                .results-icon {
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 16px;
+                    background: var(--primary);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 8px 16px rgba(90, 129, 250, 0.2);
+                    flex-shrink: 0;
+                }
+                .results-text { flex: 1; min-width: 0; }
+                .results-subtitle { color: var(--text-muted); fontSize: 1rem; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+                .results-title { font-size: 2rem; fontWeight: 800; margin: 0; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                .btn-clear-results {
+                    background: white;
+                    border: 1px solid var(--border-color);
+                    padding: 12px 25px;
+                    border-radius: 12px;
+                    fontWeight: 700;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    white-space: nowrap;
+                }
+                .btn-clear-results:hover { border-color: var(--primary); color: var(--primary); }
 
                 @media (max-width: 768px) {
                     .blog-banner { padding: 8rem 0 2rem; }
                     .blog-banner-title { font-size: 2.2rem; }
                     .blog-banner-text { font-size: 1rem; }
                     .results-banner { padding-top: 7rem; }
+                    .results-inner { flex-direction: column; text-align: center; padding: 2rem 1.5rem; gap: 1.5rem; }
+                    .results-text { width: 100%; }
+                    .results-title { font-size: 1.5rem; white-space: normal; }
+                    .results-subtitle { font-size: 0.85rem; }
+                    .btn-clear-results { width: 100%; justify-content: center; }
                 }
 
                 @media (max-width: 480px) {

@@ -77,13 +77,13 @@ const PostDetails = () => {
                         marginBottom: '4rem'
                     }}>
                         <div className="post-header" style={{ marginBottom: '3rem' }}>
-                            <div className="post-meta" style={{ marginBottom: '1.5rem', display: 'flex', gap: '1.5rem', alignItems: 'center', color: '#64748B', fontSize: '0.9rem' }}>
-                                <Link to={`/?category=${post.category}`} className="cat-badge" style={{ padding: '6px 15px', background: 'rgba(90, 129, 250, 0.1)', color: 'var(--primary)', fontWeight: '700', borderRadius: '4px', textTransform: 'uppercase', textDecoration: 'none' }}>{post.category}</Link>
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={16} /> {post.readTime} read</span>
-                                {post.createdAt && <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Calendar size={16} /> {new Date(post.createdAt).toLocaleDateString()}</span>}
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MessageSquare size={16} /> {comments.length} Comments</span>
+                            <div className="post-meta">
+                                <Link to={`/?category=${post.category}`} className="cat-badge">{post.category}</Link>
+                                <span className="meta-item"><Clock size={16} /> {post.readTime} read</span>
+                                {post.createdAt && <span className="meta-item"><Calendar size={16} /> {new Date(post.createdAt).toLocaleDateString()}</span>}
+                                <span className="meta-item"><MessageSquare size={16} /> {comments.length} Comments</span>
                             </div>
-                            <h1 style={{ fontSize: '3.5rem', lineHeight: '1.2', marginBottom: '2rem', fontWeight: '800', color: '#0F172A' }}>{post.title}</h1>
+                            <h1 className="post-detail-title">{post.title}</h1>
                             <div className="author-info" style={{ display: 'flex', alignItems: 'center', gap: '1rem', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0', padding: '1rem 0' }}>
                                   <img src={profileImg} 
                                      alt="Author" style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'cover' }} />
@@ -126,11 +126,11 @@ const PostDetails = () => {
                                 <MessageSquare size={32} color="var(--primary)" /> {comments.length} Comments
                             </h3>
 
-                            {/* Comment Form */}
-                            <div style={{ background: 'var(--bg-light)', padding: '3.5rem', borderRadius: '24px', marginBottom: '5rem', border: '1px solid var(--border-color)' }}>
+                             {/* Comment Form */}
+                            <div className="post-comment-form">
                                 <h4 style={{ fontSize: '1.5rem', marginBottom: '2rem', fontWeight: '800' }}>Leave a comment</h4>
-                                <form onSubmit={handleCommentSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                                    <div style={{ gridColumn: 'span 1' }}>
+                                <form onSubmit={handleCommentSubmit} className="comment-form-grid">
+                                    <div className="form-group">
                                         <input 
                                             type="text" 
                                             placeholder="Your Name*" 
@@ -140,7 +140,7 @@ const PostDetails = () => {
                                             style={{ background: 'white', padding: '18px 25px' }}
                                         />
                                     </div>
-                                    <div style={{ gridColumn: 'span 1' }}>
+                                    <div className="form-group">
                                         <input 
                                             type="email" 
                                             placeholder="Your Email*" 
@@ -150,7 +150,7 @@ const PostDetails = () => {
                                             style={{ background: 'white', padding: '18px 25px' }}
                                         />
                                     </div>
-                                    <div style={{ gridColumn: 'span 2' }}>
+                                     <div className="form-group full-width">
                                         <textarea 
                                             placeholder="Write your comment here..." 
                                             required 
@@ -160,7 +160,7 @@ const PostDetails = () => {
                                             style={{ background: 'white', padding: '20px 25px', width: '100%', borderRadius: '16px', border: '1px solid var(--border-color)', fontFamily: 'inherit' }}
                                         ></textarea>
                                     </div>
-                                    <div style={{ gridColumn: 'span 2' }}>
+                                    <div className="form-group full-width">
                                         <button 
                                             type="submit" 
                                             className="btn-primary" 
@@ -214,9 +214,41 @@ const PostDetails = () => {
                 .icon-link:hover { color: var(--primary); transform: translateY(-3px); }
                 input:focus, textarea:focus { border-color: var(--primary) !important; outline: none; }
 
+                .post-header { margin-bottom: 3rem; }
+                .post-meta { 
+                    margin-bottom: 1.5rem; 
+                    display: flex; 
+                    gap: 1.5rem; 
+                    align-items: center; 
+                    flex-wrap: wrap;
+                    color: #64748B; 
+                    font-size: 0.9rem; 
+                }
+                .cat-badge { padding: 6px 15px; background: rgba(90, 129, 250, 0.1); color: var(--primary); font-weight: 700; border-radius: 4px; text-transform: uppercase; text-decoration: none; }
+                .meta-item { display: flex; align-items: center; gap: 6px; }
+                .post-detail-title { font-size: 3.5rem; line-height: 1.2; margin-bottom: 2rem; font-weight: 800; color: #0F172A; }
+                .author-info { display: flex; alignItems: center; gap: 1rem; border-top: 1px solid #E2E8F0; border-bottom: 1px solid #E2E8F0; padding: 1rem 0; }
+                
+                .post-comment-form { background: var(--bg-light); padding: 3.5rem; border-radius: 24px; margin-bottom: 5rem; border: 1px solid var(--border-color); }
+                .comment-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+                .full-width { grid-column: span 2; }
+
                 @media (max-width: 768px) {
-                    .post-detail-content { padding: 2rem !important; border-radius: 20px !important; }
-                    .post-title-text { font-size: 2.5rem !important; }
+                    .post-detail-content { padding: 2rem 1.5rem !important; border-radius: 20px !important; }
+                    .post-detail-title { font-size: 2.2rem !important; line-height: 1.3 !important; }
+                    .post-meta { gap: 1rem 1.5rem; margin-bottom: 2rem; }
+                    .author-info { flex-direction: column !important; align-items: flex-start !important; gap: 15px !important; }
+                    .author-info div { margin-left: 0 !important; }
+                    .post-comment-form { padding: 2rem 1.5rem !important; }
+                    .comment-form-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
+                    .full-width { grid-column: span 1 !important; }
+                    .btn-primary { width: 100% !important; padding: 16px 20px !important; }
+                }
+                
+                @media (max-width: 480px) {
+                    .post-detail-title { font-size: 1.8rem !important; }
+                    .post-meta { gap: 10px; }
+                    .meta-item { font-size: 0.8rem; }
                 }
             `}</style>
         </main>

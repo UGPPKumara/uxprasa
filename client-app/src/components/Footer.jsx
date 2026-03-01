@@ -99,7 +99,13 @@ const Footer = () => {
                             }}>{status.msg}</p>
                         )}
                     </div>
-                    <form onSubmit={handleSubscribe} className="footer-newsletter-form">
+                    <form onSubmit={handleSubscribe} className="footer-newsletter-form" style={{ 
+                        flex: '1', 
+                        display: 'flex', 
+                        gap: '1rem', 
+                        maxWidth: '600px', 
+                        minWidth: '350px' 
+                    }}>
                         <input 
                             type="email" 
                             required
@@ -272,8 +278,8 @@ const Footer = () => {
 
                 @media (max-width: 1024px) {
                     .footer-newsletter-box { flex-direction: column !important; text-align: center; gap: 2rem !important; padding: 3rem 2rem !important; }
-                    .footer-newsletter-form { width: 100% !important; max-width: 100% !important; flex-direction: column !important; }
-                    .footer-news-input, .footer-news-btn { width: 100% !important; text-align: center; }
+                    .footer-newsletter-form { width: 100% !important; max-width: 100% !important; flex-direction: column !important; min-width: 0 !important; }
+                    .footer-news-input, .footer-news-btn { width: 100% !important; text-align: center; margin: 0; }
                 }
 
                 @media (max-width: 768px) {
