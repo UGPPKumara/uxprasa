@@ -35,6 +35,19 @@ function App() {
     console.log("App: Root component mounting");
     
     useEffect(() => {
+        // Wake up the backend on mount (Render cold start mitigation)
+        const wakeUp = async () => {
+            try {
+                // Call ping endpoint as early as possible
+                const api = (await import('./api')).default;
+                await api.get('/api/ping');
+                console.log("App: Backend wake-up ping successful");
+            } catch (err) {
+                console.log("App: Backend wake-up ping failed (might be starting up)");
+            }
+        };
+        wakeUp();
+
         console.log("App: Main observer effect running");
         const observerOptions = {
             threshold: 0.1,

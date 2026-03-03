@@ -56,9 +56,10 @@ const Home = () => {
                 const category = searchParams.get('category') || '';
                 const page = searchParams.get('page') || 1;
                 
+                // Increased timeout to 30s to handle Render cold starts
                 const res = await api.get(`/api/posts`, {
                     params: { search, category, page, limit: 4 },
-                    timeout: 8000
+                    timeout: 30000 
                 });
                 
                 setPosts(res.data.posts || []);
@@ -72,11 +73,7 @@ const Home = () => {
         };
         fetchPosts();
 
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 10000);
-
-        return () => clearTimeout(timer);
+        return () => {};
     }, [location.search]);
 
     const displayPosts = posts;
@@ -169,9 +166,21 @@ const Home = () => {
             <div className="main-layout scroll-reveal" id="blog-posts">
                 <div className="posts-column animate-fade delay-1">
                     {loading ? (
-                        <div style={{ padding: '4rem 0', textAlign: 'center' }}>
-                            <div className="loader" style={{ width: '40px', height: '40px', border: '3px solid var(--light-2)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1.5rem' }}></div>
-                            <p style={{ color: 'var(--text-muted)', fontWeight: '600' }}>Loading posts...</p>
+                        <div className="skeleton-grid">
+                            {[1, 2, 3, 4].map((n) => (
+                                <div key={n} className="skeleton-card">
+                                    <div className="skeleton skeleton-img"></div>
+                                    <div className="skeleton-content">
+                                        <div className="skeleton skeleton-title"></div>
+                                        <div className="skeleton skeleton-text"></div>
+                                        <div className="skeleton skeleton-text" style={{ width: '80%' }}></div>
+                                        <div className="skeleton-footer">
+                                            <div className="skeleton skeleton-avatar"></div>
+                                            <div className="skeleton skeleton-meta"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     ) : displayPosts.length === 0 ? (
                         <div style={{ padding: '6rem 2rem', textAlign: 'center', background: 'var(--bg-card)', borderRadius: '32px', border: '1px dashed var(--border-color)' }}>
@@ -217,6 +226,23 @@ const Home = () => {
                 .cta-icon-circle.outline { border: 1.5px solid var(--border-color); color: var(--text-muted); }
                 .cta-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin: 0; }
                 @keyframes spin { to { transform: rotate(360deg); } }
+                
+                /* Skeleton Styles */
+                .skeleton-grid { display: flex; flex-direction: column; gap: 2rem; }
+                .skeleton-card { background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--border-color); display: flex; gap: 25px; }
+                .skeleton-img { width: 300px; height: 180px; border-radius: 16px; flex-shrink: 0; }
+                .skeleton-content { flex: 1; display: flex; flex-direction: column; gap: 15px; padding: 10px 0; }
+                .skeleton-title { height: 1.8rem; width: 70%; border-radius: 8px; }
+                .skeleton-text { height: 1rem; width: 100%; border-radius: 4px; }
+                .skeleton-footer { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+                .skeleton-avatar { width: 32px; height: 32px; border-radius: 50%; }
+                .skeleton-meta { height: 0.8rem; width: 100px; border-radius: 4px; }
+
+                @media (max-width: 768px) {
+                    .skeleton-card { flex-direction: column; }
+                    .skeleton-img { width: 100%; height: 200px; }
+                }
+
                 .page-btn { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-muted); cursor: pointer; transition: all 0.3s; }
                 .page-btn.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 700; box-shadow: 0 4px 10px rgba(90, 129, 250, 0.3); }
 

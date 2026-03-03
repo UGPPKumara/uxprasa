@@ -14,11 +14,15 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Scrolled enough to apply mini-style
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
     const currentTheme = document.documentElement.getAttribute('data-theme');
     setIsDark(currentTheme === 'dark');
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -144,37 +148,42 @@ const Header = () => {
       <style>{`
         .header {
           position: fixed;
-          top: 40px;
-          left: 5%;
-          right: 5%;
-          height: 80px;
-          backdrop-filter: blur(10px);
-          border-radius: 100px;
+          top: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 90%;
+          max-width: 1300px;
+          height: 76px;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border-radius: 24px;
           z-index: 1000;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          border: 1px solid rgba(0, 0, 0, 0.08);
-          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+          transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
           padding: 0 1.5rem;
-          background: rgba(248, 249, 253, 0.85);
+          background: rgba(255, 255, 255, 0.8);
+          display: flex;
+          align-items: center;
         }
         [data-theme='dark'] .header {
-          background: rgba(30, 41, 59, 0.85);
-          border-color: rgba(255,255,255,0.08);
+          background: rgba(30, 41, 59, 0.7);
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
         .header.scrolled {
-          top: 0 !important;
-          left: 0 !important;
-          right: 0 !important;
-          width: 100% !important;
+          top: 0;
           height: 70px;
+          width: 100%;
+          max-width: 100%;
           border-radius: 0;
-          backdrop-filter: blur(15px);
-          box-shadow: var(--shadow-sm);
-          padding: 0 5%;
-          background: rgba(248, 249, 253, 0.95);
+          background: rgba(255, 255, 255, 0.95);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
         [data-theme='dark'] .header.scrolled {
-          background: rgba(15, 23, 42, 0.95);
+          background: rgba(15, 23, 42, 0.9);
+          border-color: rgba(255, 255, 255, 0.05);
         }
         .logo-img {
           height: 35px;
@@ -227,20 +236,13 @@ const Header = () => {
           .desktop-nav { gap: 1rem !important; }
           .logo-img { height: 28px; }
           .header {
-            left: 2%;
-            right: 2%;
+            width: 96%;
             padding: 0 1rem;
           }
           .header.scrolled {
             padding: 0 1rem !important;
           }
           .nav-link { font-size: 0.85rem; }
-        }
-
-        @media (max-width: 900px) {
-          .desktop-nav { gap: 0.8rem !important; }
-          .logo-img { height: 24px; }
-          .nav-link { font-size: 0.8rem; }
         }
 
         @media (max-width: 768px) {
@@ -254,7 +256,8 @@ const Header = () => {
             top: 0;
             left: 0;
             right: 0;
-            width: 100%;
+            width: 100% !important;
+            transform: none !important;
             height: 65px;
             padding: 0 10px;
             border-radius: 0;
@@ -264,11 +267,12 @@ const Header = () => {
           }
           .header.scrolled {
             top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
             height: 65px !important;
             border-radius: 0 !important;
             padding: 0 10px !important;
+          }
+          .header.hidden {
+            transform: translateY(-100%) !important;
           }
           .icon-btn { width: 34px; height: 34px; }
           .icon-btn svg { width: 18px; height: 18px; }

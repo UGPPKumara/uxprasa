@@ -34,6 +34,10 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
+app.get('/api/ping', (req, res) => {
+    res.status(200).json({ message: 'pong', timestamp: new Date().toISOString() });
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/posts', require('./routes/posts'));
